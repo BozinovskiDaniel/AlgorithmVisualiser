@@ -1,0 +1,19 @@
+.node {
+  height: 25px;
+  width: 25px;
+  border: 1px solid #404040;
+  display: inline-block;
+}
+
+.grid {
+  position: absolute;
+  margin: 400px 50px 50px 50px;
+}
+
+.start-node {
+  background-color: green;
+}
+
+.end-node {
+  background-color: red;
+}
