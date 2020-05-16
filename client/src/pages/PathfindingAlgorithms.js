@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Node from "../components/Node";
 
+// Algorithms
+import { dijkstra } from "../components/pathFindingAlgorithms/dijkstras";
+
+// Global vars
+const START_ROW = 10;
+const START_COL = 15;
+const FINISH_ROW = 10;
+const FINISH_COL = 35;
+
 function PathfindingAlgorithms() {
   const [grid, setGrid] = useState(null);
 
@@ -22,16 +31,29 @@ function PathfindingAlgorithms() {
     }
     setGrid(grid);
   }, []);
+
+  const dijkstrasAlgorithm = () => {
+    const startNode = grid[START_ROW][START_COL];
+    const finishNode = grid[FINISH_ROW][FINISH_COL];
+    const visitedNodesInorder = dijkstra(grid, startNode, finishNode);
+    console.log(visitedNodesInorder);
+  };
+
   return (
-    <div className="grid">
-      {grid
-        ? grid.map((row) => {
-            return row.map((node, nodeIndex) => {
-              return <Node key={nodeIndex} node={node} />;
-            });
-          })
-        : null}
-    </div>
+    <>
+      <button onClick={() => dijkstrasAlgorithm()}>
+        Visualise Dijkstra's Algorithm
+      </button>
+      <div className="grid">
+        {grid
+          ? grid.map((row) => {
+              return row.map((node, nodeIndex) => {
+                return <Node key={nodeIndex} node={node} />;
+              });
+            })
+          : null}
+      </div>
+    </>
   );
 }
 
