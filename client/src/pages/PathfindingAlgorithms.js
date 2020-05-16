@@ -19,24 +19,32 @@ function PathfindingAlgorithms() {
     for (let row = 0; row < 20; row++) {
       const rows = [];
       for (let col = 0; col < 50; col++) {
-        const currNode = {
-          col,
-          row,
-          isStartNode: col === 5 && row === 5,
-          isEndNode: col === 35 && row === 5,
-        };
-        rows.push(currNode);
+        rows.push(createNode(col, row));
       }
       grid.push(rows);
     }
     setGrid(grid);
   }, []);
 
+  const animateDijkstras = (visitedNodesInorder) => {
+    for (const node of visitedNodesInorder) {
+      const newGrid = grid.slice();
+      const newNode = {
+        ...node,
+        isVisited: true,
+      };
+      newGrid[node.row][node.col] = newNode;
+      setTimeout(() => {
+        setGrid(newGrid);
+      }, 100);
+    }
+  };
+
   const dijkstrasAlgorithm = () => {
     const startNode = grid[START_ROW][START_COL];
-    const finishNode = grid[FINISH_ROW][FINISH_COL];
-    const visitedNodesInorder = dijkstra(grid, startNode, finishNode);
-    console.log(visitedNodesInorder);
+    const endNode = grid[FINISH_ROW][FINISH_COL];
+    const visitedNodesInorder = dijkstra(grid, startNode, endNode);
+    animateDijkstras(visitedNodesInorder);
   };
 
   return (
@@ -56,5 +64,18 @@ function PathfindingAlgorithms() {
     </>
   );
 }
+
+const createNode = (col, row) => {
+  return {
+    col,
+    row,
+    isStart: row === START_ROW && col === START_COL,
+    isEnd: row === FINISH_ROW && col === FINISH_COL,
+    distance: Infinity,
+    isVisited: false,
+    isWall: false,
+    previousNode: null,
+  };
+};
 
 export default PathfindingAlgorithms;
