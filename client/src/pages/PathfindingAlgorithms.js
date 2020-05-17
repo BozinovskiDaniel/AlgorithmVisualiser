@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import Node from "../components/Node";
+import Navbar from "../components/layout/Navbar";
 
 // Algorithms
 import { dijkstra } from "../components/pathFindingAlgorithms/dijkstras";
@@ -17,9 +18,9 @@ function PathfindingAlgorithms() {
   useEffect(() => {
     const grid = [];
 
-    for (let row = 0; row < 20; row++) {
+    for (let row = 0; row < 19; row++) {
       const rows = [];
-      for (let col = 0; col < 50; col++) {
+      for (let col = 0; col < 45; col++) {
         rows.push(createNode(col, row));
       }
       grid.push(rows);
@@ -80,10 +81,8 @@ function PathfindingAlgorithms() {
   };
 
   return (
-    <>
-      <button onClick={() => dijkstrasAlgorithm()}>
-        Visualise Dijkstra's Algorithm
-      </button>
+    <div className="pathfindingContainer">
+      <Navbar callDijkstras={dijkstrasAlgorithm} />
       <div className="grid">
         {grid
           ? grid.map((row) => {
@@ -96,7 +95,7 @@ function PathfindingAlgorithms() {
             })
           : null}
       </div>
-    </>
+    </div>
   );
 }
 
