@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Node from "../components/Node";
 
 // Algorithms
@@ -8,10 +8,11 @@ import { dijkstra } from "../components/pathFindingAlgorithms/dijkstras";
 const START_ROW = 10;
 const START_COL = 15;
 const FINISH_ROW = 10;
-const FINISH_COL = 35;
+const FINISH_COL = 44;
 
 function PathfindingAlgorithms() {
   const [grid, setGrid] = useState(null);
+  const [mouseIsPressed, setMouseIsPressed] = useState(false);
 
   useEffect(() => {
     const grid = [];
@@ -26,17 +27,36 @@ function PathfindingAlgorithms() {
     setGrid(grid);
   }, []);
 
+  const handleMouseDown = (row, col) => {
+    const newGrid = getGridWithWallToggled(grid, row, col);
+    setGrid(newGrid);
+    setMouseIsPressed(true);
+  };
+
+  const handleMouseEnter = (row, col) => {
+    if (!mouseIsPressed) return;
+    const newGrid = getGridWithWallToggled(grid, row, col);
+    setGrid(newGrid);
+  };
+
+  const handleMouseUp = () => {
+    setMouseIsPressed(false);
+  };
+
   const animateDijkstras = (visitedNodesInorder) => {
-    for (const node of visitedNodesInorder) {
-      const newGrid = grid.slice();
-      const newNode = {
-        ...node,
-        isVisited: true,
-      };
-      newGrid[node.row][node.col] = newNode;
+    for (let i = 0; i < visitedNodesInorder.length; i++) {
       setTimeout(() => {
-        setGrid(newGrid);
-      }, 100);
+        const node = visitedNodesInorder[i];
+        const newGrid = grid.slice();
+        const newNode = {
+          ...node,
+          isVisited: true,
+        };
+        newGrid[node.row][node.col] = newNode;
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node visited-node";
+        //setGrid(newGrid);
+      }, 20 * i);
     }
   };
 
@@ -47,6 +67,18 @@ function PathfindingAlgorithms() {
     animateDijkstras(visitedNodesInorder);
   };
 
+  const mapping = (row) => {
+    return row.map((node, nodeIndex) => (
+      <Node
+        key={nodeIndex}
+        node={node}
+        onMouseDown={() => handleMouseDown(node.row, node.col)}
+        onMouseUp={() => handleMouseUp()}
+        onMouseEnter={() => handleMouseEnter(node.row, node.col)}
+      />
+    ));
+  };
+
   return (
     <>
       <button onClick={() => dijkstrasAlgorithm()}>
@@ -55,9 +87,12 @@ function PathfindingAlgorithms() {
       <div className="grid">
         {grid
           ? grid.map((row) => {
-              return row.map((node, nodeIndex) => {
-                return <Node key={nodeIndex} node={node} />;
-              });
+              return (
+                <Fragment>
+                  {mapping(row)}
+                  <br />
+                </Fragment>
+              );
             })
           : null}
       </div>
@@ -76,6 +111,17 @@ const createNode = (col, row) => {
     isWall: false,
     previousNode: null,
   };
+};
+
+const getGridWithWallToggled = (grid, row, col) => {
+  const newGrid = grid.slice();
+  const node = newGrid[row][col];
+  const newNode = {
+    ...node,
+    isWall: !node.isWall,
+  };
+  newGrid[row][col] = newNode;
+  return newGrid;
 };
 
 export default PathfindingAlgorithms;

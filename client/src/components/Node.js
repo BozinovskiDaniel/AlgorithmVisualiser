@@ -1,11 +1,29 @@
 import React from "react";
 
 function Node(props) {
-  const { isStart, isEnd, isVisited } = props.node;
+  const { isStart, isEnd, isVisited, isWall, row, col } = props.node;
 
-  const extraClassName = isStart ? "start-node" : isEnd ? "end-node" : null;
+  const { onMouseDown, onMouseUp, onMouseEnter } = props;
 
-  return <div className={`node ${extraClassName}`} />;
+  const extraClassName = isStart
+    ? "start-node"
+    : isEnd
+    ? "end-node"
+    : isVisited
+    ? "visited-node"
+    : isWall
+    ? "node-wall"
+    : "";
+
+  return (
+    <div
+      id={`node-${row}-${col}`}
+      className={`node ${extraClassName}`}
+      onMouseDown={() => onMouseDown(row, col)}
+      onMouseUp={() => onMouseUp()}
+      onMouseEnter={() => onMouseEnter(row, col)}
+    />
+  );
 }
 
 export default Node;

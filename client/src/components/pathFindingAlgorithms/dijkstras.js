@@ -15,13 +15,17 @@ export const dijkstra = (grid, startNode, finishNode) => {
     const closestNode = unvisitedNodes.shift();
 
     // Handle walls here
+    if (closestNode.isWall) continue;
+
+    // If there is no path, return the visited nodes arr
+    if (closestNode.distance === Infinity) return visitedNodesInorder;
     // Animate here
 
     // Mark it as visited
     closestNode.visited = true;
     visitedNodesInorder.push(closestNode);
     // If found, return success, else update it's neighbours
-    if (closestNode == finishNode) return "success";
+    if (closestNode == finishNode) return visitedNodesInorder;
     updateUnvisitedNeighbours(closestNode, grid);
   }
 };
