@@ -3,7 +3,10 @@ import Node from "../components/Node";
 import Navbar from "../components/layout/Navbar";
 
 // Algorithms
-import { dijkstra } from "../components/pathFindingAlgorithms/dijkstras";
+import {
+  dijkstra,
+  getNodesInShortestPathOrder,
+} from "../components/pathFindingAlgorithms/dijkstras";
 
 // Global vars
 const START_ROW = 10;
@@ -65,6 +68,8 @@ function PathfindingAlgorithms() {
     const startNode = grid[START_ROW][START_COL];
     const endNode = grid[FINISH_ROW][FINISH_COL];
     const visitedNodesInorder = dijkstra(grid, startNode, endNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
+    console.log(nodesInShortestPathOrder);
     animateDijkstras(visitedNodesInorder);
   };
 

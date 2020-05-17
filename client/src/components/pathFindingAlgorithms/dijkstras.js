@@ -1,60 +1,49 @@
-export const dijkstra = (grid, startNode, finishNode) => {
-  // Checks if we're initially given the same start/finish node, or whether one is undefined
-  if (!startNode || !finishNode || startNode === finishNode) return false;
-
-  const visitedNodesInorder = [];
+// Performs Dijkstra's algorithm; returns *all* nodes in the order
+// in which they were visited. Also makes nodes point back to their
+// previous node, effectively allowing us to compute the shortest path
+// by backtracking from the finish node.
+export function dijkstra(grid, startNode, finishNode) {
+  const visitedNodesInOrder = [];
   startNode.distance = 0;
   const unvisitedNodes = getAllNodes(grid);
-
-  // While there are still unvisited nodes
   while (!!unvisitedNodes.length) {
-    // Sort the nodes by the shortest distances
     sortNodesByDistance(unvisitedNodes);
-
-    // Get the closest node
     const closestNode = unvisitedNodes.shift();
-
-    // Handle walls here
+    // If we encounter a wall, we skip it.
     if (closestNode.isWall) continue;
-
-    // If there is no path, return the visited nodes arr
-    if (closestNode.distance === Infinity) return visitedNodesInorder;
-    // Animate here
-
-    // Mark it as visited
-    closestNode.visited = true;
-    visitedNodesInorder.push(closestNode);
-    // If found, return success, else update it's neighbours
-    if (closestNode === finishNode) return visitedNodesInorder;
-    updateUnvisitedNeighbours(closestNode, grid);
+    // If the closest node is at a distance of infinity,
+    // we must be trapped and should therefore stop.
+    if (closestNode.distance === Infinity) return visitedNodesInOrder;
+    closestNode.isVisited = true;
+    visitedNodesInOrder.push(closestNode);
+    if (closestNode === finishNode) return visitedNodesInOrder;
+    updateUnvisitedNeighbors(closestNode, grid);
   }
-};
+}
 
-const sortNodesByDistance = (unvisitedNodes) => {
-  unvisitedNodes.sort((a, b) => a.distance - b.distance);
-};
+function sortNodesByDistance(unvisitedNodes) {
+  unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
+}
 
-const updateUnvisitedNeighbours = (node, grid) => {
-  // Get an array of the neighbours
-  const unvisitedNeighbours = getUnvisitedNeighbours(node, grid);
-
-  for (const neighbour of unvisitedNeighbours) {
-    neighbour.distance = node.distance + 1;
-    neighbour.previousNode = node;
+function updateUnvisitedNeighbors(node, grid) {
+  const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
+  for (const neighbor of unvisitedNeighbors) {
+    neighbor.distance = node.distance + 1;
+    neighbor.previousNode = node;
   }
-};
+}
 
-const getUnvisitedNeighbours = (node, grid) => {
-  const neighbours = [];
-  const { row, col } = node;
-  if (row > 0) neighbours.push(grid[row - 1][col]);
-  if (row < grid.length - 1) neighbours.push(grid[row + 1][col]);
-  if (col > 0) neighbours.push(grid[row][col - 1]);
-  if (col < grid[0].length - 1) neighbours.push(grid[row][col + 1]);
-  return neighbours.filter((neighbour) => !neighbour.isVisited);
-};
+function getUnvisitedNeighbors(node, grid) {
+  const neighbors = [];
+  const { col, row } = node;
+  if (row > 0) neighbors.push(grid[row - 1][col]);
+  if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
+  if (col > 0) neighbors.push(grid[row][col - 1]);
+  if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
+  return neighbors.filter((neighbor) => !neighbor.isVisited);
+}
 
-const getAllNodes = (grid) => {
+function getAllNodes(grid) {
   const nodes = [];
   for (const row of grid) {
     for (const node of row) {
@@ -62,4 +51,16 @@ const getAllNodes = (grid) => {
     }
   }
   return nodes;
-};
+}
+
+// Backtracks from the finishNode to find the shortest path.
+// Only works when called *after* the dijkstra method above.
+export function getNodesInShortestPathOrder(finishNode) {
+  const nodesInShortestPathOrder = [];
+  let currentNode = finishNode;
+  while (currentNode !== null) {
+    nodesInShortestPathOrder.unshift(currentNode);
+    currentNode = currentNode.previousNode;
+  }
+  return nodesInShortestPathOrder;
+}
