@@ -12,7 +12,7 @@ import {
 const START_ROW = 10;
 const START_COL = 15;
 const FINISH_ROW = 10;
-const FINISH_COL = 44;
+const FINISH_COL = 35;
 
 function PathfindingAlgorithms() {
   const [grid, setGrid] = useState(null);
