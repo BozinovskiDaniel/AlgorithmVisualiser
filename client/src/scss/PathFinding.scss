@@ -25,6 +25,10 @@
   background-color: red;
 }
 
+.shortestPath-node {
+  background-color: #ffff33;
+}
+
 .visited-node {
   animation-name: visitedAnimation;
   animation-duration: 1.5s;

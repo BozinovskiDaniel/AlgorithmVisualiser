@@ -47,8 +47,15 @@ function PathfindingAlgorithms() {
     setMouseIsPressed(false);
   };
 
-  const animateDijkstras = (visitedNodesInorder) => {
-    for (let i = 0; i < visitedNodesInorder.length; i++) {
+  const animateDijkstras = (visitedNodesInorder, nodesInShortestPathOrder) => {
+    for (let i = 0; i <= visitedNodesInorder.length; i++) {
+      if (i === visitedNodesInorder.length) {
+        setTimeout(() => {
+          animateShortestPath(nodesInShortestPathOrder);
+        }, 20 * i);
+        return;
+      }
+
       setTimeout(() => {
         const node = visitedNodesInorder[i];
         const newGrid = grid.slice();
@@ -64,13 +71,23 @@ function PathfindingAlgorithms() {
     }
   };
 
+  const animateShortestPath = (nodesInShortestPathOrder) => {
+    for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
+      setTimeout(() => {
+        // Set the node class
+        const node = nodesInShortestPathOrder[i];
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node shortestPath-node";
+      }, 50 * i);
+    }
+  };
+
   const dijkstrasAlgorithm = () => {
     const startNode = grid[START_ROW][START_COL];
     const endNode = grid[FINISH_ROW][FINISH_COL];
     const visitedNodesInorder = dijkstra(grid, startNode, endNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
-    console.log(nodesInShortestPathOrder);
-    animateDijkstras(visitedNodesInorder);
+    animateDijkstras(visitedNodesInorder, nodesInShortestPathOrder);
   };
 
   const mapping = (row) => {
