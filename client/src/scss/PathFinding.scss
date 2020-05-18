@@ -18,11 +18,67 @@
 }
 
 .start-node {
-  background-color: green;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .end-node {
-  background-color: red;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.start-icon {
+  position: absolute;
+  z-index: 5;
+  animation-name: loadingAnimationStart;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-fill-mode: forwards;
+}
+
+.end-icon {
+  position: absolute;
+  z-index: 5;
+  animation-name: loadingAnimationEnd;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-fill-mode: forwards;
+}
+
+@keyframes loadingAnimationStart {
+  0% {
+    transform: scale(0.4);
+  }
+
+  50% {
+    transform: scale(0.8);
+  }
+
+  75% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1.8);
+  }
+}
+
+@keyframes loadingAnimationEnd {
+  0% {
+    transform: scale(0.2);
+  }
+
+  50% {
+    transform: scale(0.35);
+  }
+
+  75% {
+    transform: scale(0.7);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .shortestPath-node {

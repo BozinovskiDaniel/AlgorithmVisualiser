@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  button: { margin: "0 15px" },
   title: {
     flexGrow: 1,
   },
@@ -32,10 +33,13 @@ function Navbar(props) {
           </Typography>
           <Button
             color="inherit"
-            className="button"
+            className={classes.button}
             onClick={() => callDijkstras()}
           >
-            Visualise Dijkstra's Algorithm
+            Visualise Dijkstra's
+          </Button>
+          <Button color="inherit" className={classes.button}>
+            Visualise A*
           </Button>
         </Toolbar>
       </AppBar>
