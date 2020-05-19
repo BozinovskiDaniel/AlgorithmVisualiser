@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Swal from "sweetalert2";
+import logo from "../../images/logo.png";
 
 import {
   Grid,
@@ -11,7 +11,6 @@ import {
   Typography,
   MenuItem,
   Menu,
-  Avatar,
 } from "@material-ui/core";
 
 const styles = (theme) => ({
@@ -31,7 +30,11 @@ const styles = (theme) => ({
     color: "#ddd",
     margin: "0 10px",
   },
-
+  logo: {
+    height: 40,
+    width: 40,
+    marginRight: 10,
+  },
   AppBar: {
     //height:400,
     //background: `url("http://lorempixel.com/1920/1080/nature") no-repeat center center`,
@@ -104,6 +107,7 @@ function Navbar(props) {
           <Toolbar>
             <Grid className={classes.grow}>
               <Button className={[classes.mainLogo]}>
+                <img src={logo} className={classes.logo} alt="logo" />
                 <Typography variant="h5">Algorithm Visualiser</Typography>
               </Button>
             </Grid>

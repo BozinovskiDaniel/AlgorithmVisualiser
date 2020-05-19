@@ -150,7 +150,7 @@ function PathfindingAlgorithms() {
   // Animate the path after the algorithm is complete
   const animatePath = (visitedNodesInOrder, endNode) => {
     for (let i = 0; i < visitedNodesInOrder.length; i++) {
-      if (visitedNodesInOrder[i - 1] == endNode) return;
+      if (visitedNodesInOrder[i - 1] === endNode) return;
       setTimeout(() => {
         // Set the node class
         const node = visitedNodesInOrder[i];
