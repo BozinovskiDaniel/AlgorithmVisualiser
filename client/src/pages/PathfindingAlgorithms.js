@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import Node from "../components/Node";
 import Navbar from "../components/layout/Navbar";
+import Typography from "@material-ui/core/Typography";
 
 // Algorithms
 import {
@@ -212,7 +213,13 @@ function PathfindingAlgorithms() {
         callAStar={aStarAlgorithm}
         clearGrid={clearGrid}
       />
+
       <div className="grid">
+        <div className="textContainer">
+          <Typography variant="h5">
+            Select your Path Finding Algorithm and Visualise it!
+          </Typography>
+        </div>
         {grid
           ? grid.map((row) => {
               return (
