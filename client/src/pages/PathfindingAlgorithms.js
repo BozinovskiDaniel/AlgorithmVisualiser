@@ -8,6 +8,8 @@ import {
   getNodesInShortestPathOrder,
 } from "../components/pathFindingAlgorithms/dijkstras";
 
+import { performDFS } from "../components/pathFindingAlgorithms/depthFirstSearch";
+
 // Global vars
 const START_ROW = 10;
 const START_COL = 15;
@@ -71,7 +73,45 @@ function PathfindingAlgorithms() {
     }
   };
 
-  const animateShortestPath = (nodesInShortestPathOrder) => {
+  // Animate the Depth First Search Algorithm
+  const animateDFS = (visitedNodesInOrder, endNode) => {
+    for (let i = 0; i < visitedNodesInOrder.length; i++) {
+      if (visitedNodesInOrder[i - 1] === endNode) {
+        setTimeout(() => {
+          animatePath(visitedNodesInOrder, endNode);
+        }, 20 * i);
+        return;
+      }
+
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        const newGrid = grid.slice();
+        const newNode = {
+          ...node,
+          isVisited: true,
+        };
+        newGrid[node.row][node.col] = newNode;
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node visited-node";
+      }, 20 * i);
+    }
+  };
+
+  // Animate the path after the algorithm is complete
+  const animatePath = (visitedNodesInOrder, endNode) => {
+    for (let i = 0; i < visitedNodesInOrder.length; i++) {
+      if (visitedNodesInOrder[i - 1] == endNode) return;
+      setTimeout(() => {
+        // Set the node class
+        const node = visitedNodesInOrder[i];
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node shortestPath-node";
+      }, 50 * i);
+    }
+  };
+
+  // Animates the Shortest path for dijkstras
+  const animateShortestPath = (nodesInShortestPathOrder, endNode) => {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         // Set the node class
@@ -90,6 +130,13 @@ function PathfindingAlgorithms() {
     animateDijkstras(visitedNodesInorder, nodesInShortestPathOrder);
   };
 
+  const dfsAlgorithm = () => {
+    const startNode = grid[START_ROW][START_COL];
+    const endNode = grid[FINISH_ROW][FINISH_COL];
+    const visitedNodesInOrder = performDFS(grid, startNode, endNode);
+    animateDFS(visitedNodesInOrder, endNode);
+  };
+
   const mapping = (row) => {
     return row.map((node, nodeIndex) => (
       <Node
@@ -104,7 +151,7 @@ function PathfindingAlgorithms() {
 
   return (
     <div className="pathfindingContainer">
-      <Navbar callDijkstras={dijkstrasAlgorithm} />
+      <Navbar callDijkstras={dijkstrasAlgorithm} callDFS={dfsAlgorithm} />
       <div className="grid">
         {grid
           ? grid.map((row) => {
