@@ -1,69 +1,167 @@
-import React from "react";
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import { withStyles } from "@material-ui/core/styles";
+import Swal from "sweetalert2";
 
-// Material UI
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  Grid,
+  Button,
+  AppBar,
+  Toolbar,
+  Typography,
+  MenuItem,
+  Menu,
+  Avatar,
+} from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  navbarContainer: {
-    display: "flex",
-    backgroundColor: "#404040",
-    height: "8vh",
-    width: "100%",
-    alignItems: "center",
-    fontFamily: "Times New Roman",
+const styles = (theme) => ({
+  row: {
+    flexGrow: 1,
   },
-  navbarTitle: {
-    fontSize: 35,
-    color: "#eee",
-    paddingLeft: "100px",
-    width: "100%",
+  grow: {
+    flexGrow: 1,
   },
-  navbarList: {
-    listStyle: "none",
-    float: "right",
+  container: {
     width: "100%",
-    paddingRight: "100px",
+    margin: "auto",
+    paddingRight: 90,
   },
-  listItem: {
-    fontSize: 18,
-    color: "#eee",
-    display: "inline",
-    padding: "0 10px",
-    cursor: "pointer",
-    float: "right",
-    transition: "transform 0.5s ease-in-out",
+  buttonFontSize: {
+    fontSize: "15px",
+    color: "#ddd",
+    margin: "0 10px",
+  },
+
+  AppBar: {
+    //height:400,
+    //background: `url("http://lorempixel.com/1920/1080/nature") no-repeat center center`,
+    backgroundColor: "rgba(30, 139, 195, 0.9)",
+    backgroundSize: "cover",
+  },
+  mainLogo: {
+    color: "#fff",
+    justifyContent: "left",
+    paddingLeft: 90,
     "&:hover": {
-      color: "rgba(255, 255, 255, 0.75)",
-      transform: "scale(1.1)",
+      background: "transparent",
     },
   },
-}));
 
-// onClick={() => callDijkstras()}
+  loginButton: {
+    background: "#e91e63",
+    color: "#fff",
+    borderRadius: "25px",
+    padding: "0px 25px",
+    margin: "0 5px",
+
+    "&:hover": {
+      background: "rgba(233,30,99, 0.9)",
+      boxShadow: "0px 2px 10px #888888",
+    },
+  },
+});
 
 function Navbar(props) {
-  const classes = useStyles();
-  const { callDijkstras, callDFS, callBFS, callAStar } = props;
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedAlgo, setSelectedAlgo] = useState(null);
+  const {
+    classes,
+    callDijkstras,
+    callDFS,
+    callBFS,
+    callAStar,
+    clearGrid,
+  } = props;
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const visualiseAlgorithm = () => {
+    if (selectedAlgo === null)
+      Swal.fire("Please select an Algorithm to Visualise!");
+    else if (selectedAlgo === "Dijkstras") callDijkstras();
+    else if (selectedAlgo === "DFS") callDFS();
+    else if (selectedAlgo === "BFS") callBFS();
+    else if (selectedAlgo === "A*") callAStar();
+  };
+
+  const setAlgorithm = (algo) => {
+    setSelectedAlgo(algo);
+    handleClose();
+  };
+
+  const open = Boolean(anchorEl);
 
   return (
-    <div className={classes.navbarContainer}>
-      <h3 className={classes.navbarTitle}>Algorithm Visualiser</h3>
-      <ul className={classes.navbarList}>
-        <li className={classes.listItem} onClick={() => callBFS()}>
-          Visualise BFS
-        </li>
-        <li className={classes.listItem} onClick={() => callDFS()}>
-          Visualise DFS
-        </li>
-        <li className={classes.listItem} onClick={() => callAStar()}>
-          Visualise A*
-        </li>
-        <li className={classes.listItem} onClick={() => callDijkstras()}>
-          Visualise Dijkstra's
-        </li>
-      </ul>
+    <div className={classes.root}>
+      <AppBar position="static" color="default" className={classes.AppBar}>
+        <Grid item sm={12} xs={12} className={classes.container}>
+          <Toolbar>
+            <Grid className={classes.grow}>
+              <Button className={[classes.mainLogo]}>
+                <Typography variant="h5">Algorithm Visualiser</Typography>
+              </Button>
+            </Grid>
+            <Button
+              color="inherit"
+              className={classes.buttonFontSize}
+              onClick={() => clearGrid()}
+            >
+              Clear Grid
+            </Button>
+            <Button
+              color="inherit"
+              onClick={handleMenu}
+              className={classes.buttonFontSize}
+            >
+              Select Path Finding Algorithm
+            </Button>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={() => setAlgorithm("Dijkstras")}>
+                Dijkstra's Algorithm
+              </MenuItem>
+              <MenuItem onClick={() => setAlgorithm("DFS")}>
+                Depth First Search
+              </MenuItem>
+              <MenuItem onClick={() => setAlgorithm("BFS")}>
+                Breadth First Search
+              </MenuItem>
+              <MenuItem onClick={() => setAlgorithm("A*")}>
+                A* Algorithm
+              </MenuItem>
+            </Menu>
+            <Button
+              color="inherit"
+              className={[classes.buttonFontSize, classes.loginButton]}
+              onClick={() => visualiseAlgorithm()}
+            >
+              Visualise {selectedAlgo ? selectedAlgo + "!" : "<Algorithm>"}
+            </Button>
+          </Toolbar>
+        </Grid>
+      </AppBar>
     </div>
   );
 }
 
-export default Navbar;
+export default withStyles(styles)(Navbar);
+
+// const { callDijkstras, callDFS, callBFS, callAStar } = props;

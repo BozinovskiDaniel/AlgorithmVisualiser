@@ -178,6 +178,19 @@ function PathfindingAlgorithms() {
     console.log(visitedNodesInOrder);
   };
 
+  const clearGrid = () => {
+    const grid = [];
+
+    for (let row = 0; row < 19; row++) {
+      const rows = [];
+      for (let col = 0; col < 46; col++) {
+        rows.push(createNode(col, row));
+      }
+      grid.push(rows);
+    }
+    setGrid(grid);
+  };
+
   const mapping = (row) => {
     return row.map((node, nodeIndex) => (
       <Node
@@ -197,6 +210,7 @@ function PathfindingAlgorithms() {
         callDFS={dfsAlgorithm}
         callBFS={bfsAlgorithm}
         callAStar={aStarAlgorithm}
+        clearGrid={clearGrid}
       />
       <div className="grid">
         {grid
