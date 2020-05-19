@@ -9,7 +9,6 @@ export const performBFS = (grid, startNode, endNode) => {
 
   while (queue.length > 0) {
     let s = queue.shift(); // Remove the first element of the queue
-
     if (s === endNode) break; // If we found the endnode, break the loop
 
     let adjNodes = adjacentNodes(grid, s); // Return an array of the adjacent nodes
@@ -18,6 +17,7 @@ export const performBFS = (grid, startNode, endNode) => {
     // If they are not visited and aren't walls, visit them
     for (let adjNode of adjNodes) {
       if (adjNode.isVisited === false && adjNode.isWall == false) {
+        adjNode.previousNode = s;
         queue.push(adjNode);
         visitedNodesInOrder.push(adjNode);
         adjNode.isVisited = true;
