@@ -23,7 +23,7 @@ function PathfindingAlgorithms() {
 
     for (let row = 0; row < 19; row++) {
       const rows = [];
-      for (let col = 0; col < 45; col++) {
+      for (let col = 0; col < 46; col++) {
         rows.push(createNode(col, row));
       }
       grid.push(rows);
