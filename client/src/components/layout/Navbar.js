@@ -41,13 +41,15 @@ const useStyles = makeStyles((theme) => ({
 
 function Navbar(props) {
   const classes = useStyles();
-  const { callDijkstras, callDFS } = props;
+  const { callDijkstras, callDFS, callBFS } = props;
 
   return (
     <div className={classes.navbarContainer}>
       <h3 className={classes.navbarTitle}>Algorithm Visualiser</h3>
       <ul className={classes.navbarList}>
-        <li className={classes.listItem}>Visualise BFS</li>
+        <li className={classes.listItem} onClick={() => callBFS()}>
+          Visualise BFS
+        </li>
         <li className={classes.listItem} onClick={() => callDFS()}>
           Visualise DFS
         </li>

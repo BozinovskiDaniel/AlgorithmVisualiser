@@ -9,6 +9,7 @@ import {
 } from "../components/pathFindingAlgorithms/dijkstras";
 
 import { performDFS } from "../components/pathFindingAlgorithms/depthFirstSearch";
+import { performBFS } from "../components/pathFindingAlgorithms/breadthFirstSearch";
 
 // Global vars
 const START_ROW = 10;
@@ -60,6 +61,30 @@ function PathfindingAlgorithms() {
 
       setTimeout(() => {
         const node = visitedNodesInorder[i];
+        const newGrid = grid.slice();
+        const newNode = {
+          ...node,
+          isVisited: true,
+        };
+        newGrid[node.row][node.col] = newNode;
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node visited-node";
+        //setGrid(newGrid);
+      }, 20 * i);
+    }
+  };
+
+  const animateBFS = (visitedNodesInOrder, nodesInShortestPathOrder) => {
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        setTimeout(() => {
+          animateShortestPath(nodesInShortestPathOrder);
+        }, 20 * i);
+        return;
+      }
+
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
         const newGrid = grid.slice();
         const newNode = {
           ...node,
@@ -137,6 +162,14 @@ function PathfindingAlgorithms() {
     animateDFS(visitedNodesInOrder, endNode);
   };
 
+  const bfsAlgorithm = () => {
+    const startNode = grid[START_ROW][START_COL];
+    const endNode = grid[FINISH_ROW][FINISH_COL];
+    const visitedNodesInOrder = performBFS(grid, startNode, endNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
+    animateBFS(visitedNodesInOrder, nodesInShortestPathOrder);
+  };
+
   const mapping = (row) => {
     return row.map((node, nodeIndex) => (
       <Node
@@ -151,7 +184,11 @@ function PathfindingAlgorithms() {
 
   return (
     <div className="pathfindingContainer">
-      <Navbar callDijkstras={dijkstrasAlgorithm} callDFS={dfsAlgorithm} />
+      <Navbar
+        callDijkstras={dijkstrasAlgorithm}
+        callDFS={dfsAlgorithm}
+        callBFS={bfsAlgorithm}
+      />
       <div className="grid">
         {grid
           ? grid.map((row) => {
