@@ -56,7 +56,7 @@ function PathfindingAlgorithms() {
       if (i === visitedNodesInorder.length) {
         setTimeout(() => {
           animateShortestPath(nodesInShortestPathOrder);
-        }, 20 * i);
+        }, 10 * i);
         return;
       }
 
@@ -71,7 +71,7 @@ function PathfindingAlgorithms() {
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node visited-node";
         //setGrid(newGrid);
-      }, 20 * i);
+      }, 10 * i);
     }
   };
 
@@ -80,7 +80,7 @@ function PathfindingAlgorithms() {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           animateShortestPath(nodesInShortestPathOrder);
-        }, 20 * i);
+        }, 10 * i);
         return;
       }
 
@@ -95,7 +95,7 @@ function PathfindingAlgorithms() {
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node visited-node";
         //setGrid(newGrid);
-      }, 20 * i);
+      }, 10 * i);
     }
   };
 
@@ -105,7 +105,7 @@ function PathfindingAlgorithms() {
       if (visitedNodesInOrder[i - 1] === endNode) {
         setTimeout(() => {
           animatePath(visitedNodesInOrder, endNode);
-        }, 20 * i);
+        }, 10 * i);
         return;
       }
 
@@ -119,31 +119,7 @@ function PathfindingAlgorithms() {
         newGrid[node.row][node.col] = newNode;
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node visited-node";
-      }, 20 * i);
-    }
-  };
-
-  const animateAStar = (path) => {
-    for (let i = 0; i <= path.length; i++) {
-      if (i === path.length) {
-        setTimeout(() => {
-          animateShortestPath(path);
-        }, 20 * i);
-        return;
-      }
-
-      setTimeout(() => {
-        const node = path[i];
-        const newGrid = grid.slice();
-        const newNode = {
-          ...node,
-          isVisited: true,
-        };
-        newGrid[node.row][node.col] = newNode;
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node visited-node";
-        //setGrid(newGrid);
-      }, 20 * i);
+      }, 10 * i);
     }
   };
 
@@ -199,7 +175,7 @@ function PathfindingAlgorithms() {
     const startNode = grid[START_ROW][START_COL];
     const endNode = grid[FINISH_ROW][FINISH_COL];
     const path = performAStar(grid, startNode, endNode);
-    animateAStar(path);
+    animateDijkstras(path[0], path[1]);
   };
 
   const clearGrid = () => {

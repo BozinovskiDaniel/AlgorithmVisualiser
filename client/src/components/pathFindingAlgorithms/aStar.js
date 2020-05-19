@@ -1,6 +1,7 @@
 export const performAStar = (grid, startNode, endNode) => {
   let openList = [];
   let closedList = [];
+  let nodesVisited = [];
   openList.push(startNode);
 
   // While the openlist is not empty
@@ -10,7 +11,7 @@ export const performAStar = (grid, startNode, endNode) => {
     for (let node of openList) {
       if (node.f < currNode.f) currNode = node;
     }
-
+    nodesVisited.push(currNode);
     // Remove currNode from openList
     let newList = openList.filter((node) => node !== currNode);
     openList = newList;
@@ -26,7 +27,7 @@ export const performAStar = (grid, startNode, endNode) => {
         path.push(curr);
         curr = curr.previousNode;
       }
-      return path.reverse();
+      return [nodesVisited, path.reverse()];
     }
 
     let children = adjacentNodes(grid, currNode); // Get adjacent nodes
@@ -34,6 +35,8 @@ export const performAStar = (grid, startNode, endNode) => {
     // Loop over the adjacent nodes
     for (let child of children) {
       if (child.isWall) continue;
+      nodesVisited.push(child);
+
       if (closedList.includes(child)) continue; // If child is in the closed list
 
       // Calculate the heuristic distances

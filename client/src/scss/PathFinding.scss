@@ -7,7 +7,7 @@
 .node {
   height: 30px;
   width: 30px;
-  border: 1px solid rgba(25, 181, 254, 0.5);
+  border: 1px solid rgba(30, 139, 195, 0.5);
   display: inline-block;
 }
 
@@ -140,15 +140,18 @@
   0% {
     transform: scale(2);
     background-color: rgb(255, 254, 106);
+    border: none;
   }
 
   50% {
     transform: scale(1.2);
     background-color: rgb(255, 254, 106);
+    border: none;
   }
 
   100% {
     transform: scale(1);
     background-color: rgb(255, 254, 106);
+    border: none;
   }
 }
