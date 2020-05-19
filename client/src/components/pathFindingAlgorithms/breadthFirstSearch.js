@@ -16,7 +16,7 @@ export const performBFS = (grid, startNode, endNode) => {
     // Loop over the adjacent nodes
     // If they are not visited and aren't walls, visit them
     for (let adjNode of adjNodes) {
-      if (adjNode.isVisited === false && adjNode.isWall == false) {
+      if (adjNode.isVisited === false && adjNode.isWall === false) {
         adjNode.previousNode = s;
         queue.push(adjNode);
         visitedNodesInOrder.push(adjNode);

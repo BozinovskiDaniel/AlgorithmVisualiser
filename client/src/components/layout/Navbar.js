@@ -31,8 +31,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 10px",
     cursor: "pointer",
     float: "right",
+    transition: "transform 0.5s ease-in-out",
     "&:hover": {
       color: "rgba(255, 255, 255, 0.75)",
+      transform: "scale(1.1)",
     },
   },
 }));
@@ -41,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Navbar(props) {
   const classes = useStyles();
-  const { callDijkstras, callDFS, callBFS } = props;
+  const { callDijkstras, callDFS, callBFS, callAStar } = props;
 
   return (
     <div className={classes.navbarContainer}>
@@ -53,7 +55,9 @@ function Navbar(props) {
         <li className={classes.listItem} onClick={() => callDFS()}>
           Visualise DFS
         </li>
-        <li className={classes.listItem}>Visualise A*</li>
+        <li className={classes.listItem} onClick={() => callAStar()}>
+          Visualise A*
+        </li>
         <li className={classes.listItem} onClick={() => callDijkstras()}>
           Visualise Dijkstra's
         </li>

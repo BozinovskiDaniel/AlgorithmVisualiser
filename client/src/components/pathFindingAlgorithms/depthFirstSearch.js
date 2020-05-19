@@ -17,6 +17,7 @@ const dfsUtility = (visited, node, endNode, grid) => {
 
   for (const adjNode of adjNodes) {
     if (adjNode.isVisited === false && adjNode.isWall === false) {
+      adjNode.previousNode = node;
       dfsUtility(visited, adjNode, endNode, grid);
     }
   }
@@ -43,14 +44,4 @@ const adjacentNodes = (grid, node) => {
     adjNodes.push(grid[nodeRow][nodeCol - 1]);
 
   return adjNodes;
-};
-
-const calculateAmountOfNodes = (grid) => {
-  var count = 0;
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[i].length; j++) {
-      count++;
-    }
-  }
-  return count;
 };

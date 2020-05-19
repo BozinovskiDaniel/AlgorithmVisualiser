@@ -10,6 +10,7 @@ import {
 
 import { performDFS } from "../components/pathFindingAlgorithms/depthFirstSearch";
 import { performBFS } from "../components/pathFindingAlgorithms/breadthFirstSearch";
+import { performAStar } from "../components/pathFindingAlgorithms/aStar";
 
 // Global vars
 const START_ROW = 10;
@@ -170,6 +171,13 @@ function PathfindingAlgorithms() {
     animateBFS(visitedNodesInOrder, nodesInShortestPathOrder);
   };
 
+  const aStarAlgorithm = () => {
+    const startNode = grid[START_ROW][START_COL];
+    const endNode = grid[FINISH_ROW][FINISH_COL];
+    const visitedNodesInOrder = performAStar(grid, startNode, endNode);
+    console.log(visitedNodesInOrder);
+  };
+
   const mapping = (row) => {
     return row.map((node, nodeIndex) => (
       <Node
@@ -188,6 +196,7 @@ function PathfindingAlgorithms() {
         callDijkstras={dijkstrasAlgorithm}
         callDFS={dfsAlgorithm}
         callBFS={bfsAlgorithm}
+        callAStar={aStarAlgorithm}
       />
       <div className="grid">
         {grid
