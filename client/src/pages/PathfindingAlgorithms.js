@@ -123,6 +123,30 @@ function PathfindingAlgorithms() {
     }
   };
 
+  const animateAStar = (path) => {
+    for (let i = 0; i <= path.length; i++) {
+      if (i === path.length) {
+        setTimeout(() => {
+          animateShortestPath(path);
+        }, 20 * i);
+        return;
+      }
+
+      setTimeout(() => {
+        const node = path[i];
+        const newGrid = grid.slice();
+        const newNode = {
+          ...node,
+          isVisited: true,
+        };
+        newGrid[node.row][node.col] = newNode;
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node visited-node";
+        //setGrid(newGrid);
+      }, 20 * i);
+    }
+  };
+
   // Animate the path after the algorithm is complete
   const animatePath = (visitedNodesInOrder, endNode) => {
     for (let i = 0; i < visitedNodesInOrder.length; i++) {
@@ -174,8 +198,8 @@ function PathfindingAlgorithms() {
   const aStarAlgorithm = () => {
     const startNode = grid[START_ROW][START_COL];
     const endNode = grid[FINISH_ROW][FINISH_COL];
-    const visitedNodesInOrder = performAStar(grid, startNode, endNode);
-    console.log(visitedNodesInOrder);
+    const path = performAStar(grid, startNode, endNode);
+    animateAStar(path);
   };
 
   const clearGrid = () => {
@@ -238,6 +262,9 @@ const createNode = (col, row) => {
     isVisited: false,
     isWall: false,
     previousNode: null,
+    f: 0,
+    g: 0,
+    h: 0,
   };
 };
 
