@@ -25,10 +25,14 @@ function SortingAlgorithms() {
   };
 
   const quickSortFunc = () => {
-    const sorted = quickSort(barsArray, 0, barsArray.length - 1);
-    console.log(sorted);
-    console.log(barsArray);
-    setBarsArray(sorted);
+    const animations = quickSort(barsArray, 0, barsArray.length - 1);
+    console.log(animations);
+    for (let i = 0; i < animations.length; i++) {
+      setTimeout(() => {
+        console.log(animations[i]);
+        const {}
+      }, 20 * i);
+    }
   };
 
   const resetArray = () => {
