@@ -11,7 +11,7 @@ function SortingAlgorithms() {
   useEffect(() => {
     const array = [];
     const width = window.innerWidth;
-    const size = width / 5.5;
+    const size = width / 6.8;
     for (let i = 0; i < size; i++) {
       array.push(getRandomInt(5, 730));
     }
@@ -19,24 +19,26 @@ function SortingAlgorithms() {
   }, []);
 
   const bubbleSortFunc = () => {
-    // const animations = bubbleSort(barsArray.slice());
-    // console.log(barsArray);
-    // for (let i = 0; i < animations.length; i++) {
-    //   setTimeout(() => {
-    //     // Swap the animations[i].swap indices
-    //     //console.log(barsArray);
-    //     let newArr = swap(
-    //       barsArray.slice(),
-    //       animations[i].swap[0],
-    //       animations[i].swap[1]
-    //     );
-    //     // console.log(animations[i].swap[0], animations[i].swap[1]);
-    //     //console.log(barsArray);
-    //     setBarsArray(newArr);
-    //   }, 15 * i);
-    // }
     const animations = bubbleSort(barsArray);
     console.log(animations);
+
+    // Loop over animations and perform swaps
+    for (let i = 0; i < animations.length; i++) {
+      setTimeout(() => {
+        //console.log(animations[i]);
+        const arrayBars = document.getElementsByClassName("array-bar");
+        const indexOne = animations[i].swap[0];
+        const indexTwo = animations[i].swap[1];
+        //const isColorChange = i % 3 !== 2;
+        let heightOne = arrayBars[indexTwo].style.height;
+        let heightTwo = arrayBars[indexOne].style.height;
+
+        // Swap the values here
+        arrayBars[indexOne].style.height = `${heightOne}`;
+
+        arrayBars[indexTwo].style.height = `${heightTwo}`;
+      }, ANIMATION_SPEED_MS * i);
+    }
   };
 
   const mergeSortFunc = () => {
@@ -76,7 +78,7 @@ function SortingAlgorithms() {
   const resetArray = () => {
     const array = [];
     const width = window.innerWidth;
-    const size = width / 5.5;
+    const size = width / 6.8;
     for (let i = 0; i < size; i++) {
       array.push(getRandomInt(5, 730));
     }
