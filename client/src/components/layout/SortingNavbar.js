@@ -27,7 +27,7 @@ const styles = (theme) => ({
     paddingRight: 90,
   },
   buttonFontSize: {
-    fontSize: "15px",
+    fontSize: "13px",
     color: "#ddd",
     margin: "0 10px",
   },
@@ -64,7 +64,7 @@ const styles = (theme) => ({
     },
   },
 
-  loginButton: {
+  visualiseButton: {
     background: "#e91e63",
     color: "#fff",
     borderRadius: "25px",
@@ -75,20 +75,17 @@ const styles = (theme) => ({
       background: "rgba(233,30,99, 0.9)",
       boxShadow: "0px 2px 10px #888888",
     },
-    sortingTitle: {
-      fontSize: 10,
-      color: "#eee",
-    },
   },
 });
 
-function Navbar(props) {
+function SortingNavbar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedAlgo, setSelectedAlgo] = useState(null);
   const {
     classes,
-    callDijkstras,
-    callDFS,
+    resetArray,
+    callMergesort,
+    callQuicksort,
     callBFS,
     callAStar,
     clearGrid,
@@ -105,8 +102,8 @@ function Navbar(props) {
   const visualiseAlgorithm = () => {
     if (selectedAlgo === null)
       Swal.fire("Please select an Algorithm to Visualise!");
-    else if (selectedAlgo === "Dijkstras") callDijkstras();
-    else if (selectedAlgo === "DFS") callDFS();
+    else if (selectedAlgo === "Mergesort") callMergesort();
+    else if (selectedAlgo === "Quicksort") callQuicksort();
     else if (selectedAlgo === "BFS") callBFS();
     else if (selectedAlgo === "A*") callAStar();
   };
@@ -126,27 +123,27 @@ function Navbar(props) {
             <Grid className={classes.grow}>
               <Button className={[classes.mainLogo]}>
                 <img src={logo} className={classes.logo} alt="logo" />
-                <Typography variant="h5">Path Finding Algorithms</Typography>
+                <Typography variant="h5">Sorting Algorithms</Typography>
               </Button>
             </Grid>
-            <Link to="/sorting" style={{ textDecoration: "none" }}>
+            <Link to="/" style={{ textDecoration: "none" }}>
               <Button color="inherit" className={classes.switchPageButton}>
-                View Sorting Algorithms
+                Go to PathFinding Algorithms
               </Button>
             </Link>
             <Button
               color="inherit"
               className={classes.buttonFontSize}
-              onClick={() => clearGrid()}
+              onClick={() => resetArray()}
             >
-              Clear Grid
+              Generate New Array
             </Button>
             <Button
               color="inherit"
               onClick={handleMenu}
               className={classes.buttonFontSize}
             >
-              Select Path Finding Algorithm
+              Select Sorting Algorithm
             </Button>
             <Menu
               id="menu-appbar"
@@ -162,11 +159,11 @@ function Navbar(props) {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={() => setAlgorithm("Dijkstras")}>
-                Dijkstra's Algorithm
+              <MenuItem onClick={() => setAlgorithm("Mergesort")}>
+                Mergesort
               </MenuItem>
-              <MenuItem onClick={() => setAlgorithm("DFS")}>
-                Depth First Search
+              <MenuItem onClick={() => setAlgorithm("Quicksort")}>
+                Quicksort
               </MenuItem>
               <MenuItem onClick={() => setAlgorithm("BFS")}>
                 Breadth First Search
@@ -177,7 +174,7 @@ function Navbar(props) {
             </Menu>
             <Button
               color="inherit"
-              className={[classes.buttonFontSize, classes.loginButton]}
+              className={[classes.buttonFontSize, classes.visualiseButton]}
               onClick={() => visualiseAlgorithm()}
             >
               Visualise {selectedAlgo ? selectedAlgo + "!" : "<Algorithm>"}
@@ -189,6 +186,6 @@ function Navbar(props) {
   );
 }
 
-export default withStyles(styles)(Navbar);
+export default withStyles(styles)(SortingNavbar);
 
 // const { callDijkstras, callDFS, callBFS, callAStar } = props;

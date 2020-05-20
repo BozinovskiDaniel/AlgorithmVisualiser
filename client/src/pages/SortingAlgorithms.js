@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { mergeSort } from "../components/sortingAlgorithms/sortingAlgorithms";
+import { mergeSort } from "../components/sortingAlgorithms/mergeSort";
+import { quickSort } from "../components/sortingAlgorithms/quickSort";
+import SortingNavbar from "../components/layout/SortingNavbar";
 
 function SortingAlgorithms() {
   const [barsArray, setBarsArray] = useState(null);
   useEffect(() => {
     const array = [];
-    for (let i = 0; i < 200; i++) {
+    const width = window.innerWidth;
+    const size = width / 5.5;
+    for (let i = 0; i < size; i++) {
       array.push(getRandomInt(5, 730));
     }
     setBarsArray(array);
@@ -20,9 +24,18 @@ function SortingAlgorithms() {
     setBarsArray(mergeSort(barsArray));
   };
 
+  const quickSortFunc = () => {
+    const sorted = quickSort(barsArray, 0, barsArray.length - 1);
+    console.log(sorted);
+    console.log(barsArray);
+    setBarsArray(sorted);
+  };
+
   const resetArray = () => {
     const array = [];
-    for (let i = 0; i < 50; i++) {
+    const width = window.innerWidth;
+    const size = width / 5.5;
+    for (let i = 0; i < size; i++) {
       array.push(getRandomInt(5, 730));
     }
     setBarsArray(array);
@@ -30,6 +43,11 @@ function SortingAlgorithms() {
 
   return (
     <>
+      <SortingNavbar
+        resetArray={resetArray}
+        callMergesort={mergeSortFunc}
+        callQuicksort={quickSortFunc}
+      />
       <div className="array-container">
         {barsArray
           ? barsArray.map((value, index) => (
@@ -41,8 +59,6 @@ function SortingAlgorithms() {
             ))
           : null}
       </div>
-      <button onClick={() => resetArray()}>Generate New Array</button>
-      <button onClick={() => mergeSortFunc()}>Merge Sort</button>
     </>
   );
 }
