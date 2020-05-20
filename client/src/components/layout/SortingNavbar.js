@@ -86,7 +86,7 @@ function SortingNavbar(props) {
     resetArray,
     callMergesort,
     callQuicksort,
-    callBFS,
+    callBubblesort,
     callAStar,
     clearGrid,
   } = props;
@@ -104,7 +104,7 @@ function SortingNavbar(props) {
       Swal.fire("Please select an Algorithm to Visualise!");
     else if (selectedAlgo === "Mergesort") callMergesort();
     else if (selectedAlgo === "Quicksort") callQuicksort();
-    else if (selectedAlgo === "BFS") callBFS();
+    else if (selectedAlgo === "Bubblesort") callBubblesort();
     else if (selectedAlgo === "A*") callAStar();
   };
 
@@ -160,17 +160,15 @@ function SortingNavbar(props) {
               onClose={handleClose}
             >
               <MenuItem onClick={() => setAlgorithm("Mergesort")}>
-                Mergesort
+                Merge sort
               </MenuItem>
               <MenuItem onClick={() => setAlgorithm("Quicksort")}>
-                Quicksort
+                Quick sort
               </MenuItem>
-              <MenuItem onClick={() => setAlgorithm("BFS")}>
-                Breadth First Search
+              <MenuItem onClick={() => setAlgorithm("Bubblesort")}>
+                Bubble sort
               </MenuItem>
-              <MenuItem onClick={() => setAlgorithm("A*")}>
-                A* Algorithm
-              </MenuItem>
+              <MenuItem onClick={() => setAlgorithm("A*")}>Heap sort</MenuItem>
             </Menu>
             <Button
               color="inherit"

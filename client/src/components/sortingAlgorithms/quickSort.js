@@ -1,4 +1,5 @@
 let animations = [];
+
 export const quickSort = (arr, start, end) => {
   if (start >= end) return;
   let index = partition(arr, start, end, animations);
