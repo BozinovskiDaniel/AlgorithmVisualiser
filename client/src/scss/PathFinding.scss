@@ -2,6 +2,7 @@
   height: 100vh;
   width: 100%;
   overflow: none;
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .textContainer {
@@ -14,6 +15,7 @@
   height: 30px;
   width: 30px;
   border: 1px solid rgba(30, 139, 195, 0.5);
+  background-color: #fff;
   display: inline-block;
 }
 

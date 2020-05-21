@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo from "../../images/logo.png";
+import Slider from "@material-ui/core/Slider";
 
 import {
   Grid,
@@ -28,7 +29,7 @@ const styles = (theme) => ({
   },
   buttonFontSize: {
     fontSize: "13px",
-    color: "#ddd",
+    color: "#fff",
     margin: "0 10px",
   },
   logo: {

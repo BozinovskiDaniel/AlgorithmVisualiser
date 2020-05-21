@@ -9,7 +9,7 @@ import {
 } from "../components/sortingAlgorithms/insertionSort";
 import SortingNavbar from "../components/layout/SortingNavbar";
 
-const ANIMATION_SPEED_MS = 15;
+const ANIMATION_SPEED_MS = 4;
 
 function SortingAlgorithms() {
   const [barsArray, setBarsArray] = useState(null);
@@ -42,9 +42,9 @@ function SortingAlgorithms() {
             ];
             if (actionBefore === "compare") {
               arrayBars[indexOneBefore].style.backgroundColor =
-                "rgba(0, 190, 218, 0.75)";
+                "rgba(30, 139, 195, 0.9)";
               arrayBars[indexTwoBefore].style.backgroundColor =
-                "rgba(0, 190, 218, 0.75)";
+                "rgba(30, 139, 195, 0.9)";
             }
           }
           const barTwoStyle = arrayBars[indexTwo].style;
@@ -60,7 +60,7 @@ function SortingAlgorithms() {
             barTwoStyle.backgroundColor = "#e91e63";
           }
         }
-      }, i * ANIMATION_SPEED_MS);
+      }, i * (ANIMATION_SPEED_MS - 2));
     }
   };
 
@@ -104,9 +104,9 @@ function SortingAlgorithms() {
           ];
           if (actionBefore === "compare") {
             arrayBars[indexOneBefore].style.backgroundColor =
-              "rgba(0, 190, 218, 0.75)";
+              "rgba(30, 139, 195, 0.9)";
             arrayBars[indexTwoBefore].style.backgroundColor =
-              "rgba(0, 190, 218, 0.75)";
+              "rgba(30, 139, 195, 0.9)";
           }
         }
 
@@ -142,9 +142,9 @@ function SortingAlgorithms() {
             ];
             if (actionBefore === "compare") {
               arrayBars[indexOneBefore].style.backgroundColor =
-                "rgba(0, 190, 218, 0.75)";
+                "rgba(30, 139, 195, 0.9)";
               arrayBars[indexTwoBefore].style.backgroundColor =
-                "rgba(0, 190, 218, 0.75)";
+                "rgba(30, 139, 195, 0.9)";
             }
           }
           const barTwoStyle = arrayBars[indexTwo].style;
@@ -160,7 +160,7 @@ function SortingAlgorithms() {
             barTwoStyle.backgroundColor = "#e91e63";
           }
         }
-      }, i * ANIMATION_SPEED_MS);
+      }, i * (ANIMATION_SPEED_MS - 2));
     }
   };
 
@@ -209,7 +209,7 @@ function SortingAlgorithms() {
     const width = window.innerWidth;
     const size = width / 7.6;
     for (let i = 0; i < size; i++) {
-      array.push(getRandomInt(5, 730));
+      array.push(getRandomInt(5, 650));
     }
 
     const arrayBars = document.getElementsByClassName("array-bar");
@@ -219,7 +219,7 @@ function SortingAlgorithms() {
   };
 
   return (
-    <>
+    <div className="sortingContainer">
       <SortingNavbar
         resetArray={resetArray}
         callMergesort={mergeSortFunc}
@@ -239,7 +239,7 @@ function SortingAlgorithms() {
             ))
           : null}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -102,7 +102,8 @@ const styles = (theme) => ({
     margin: theme.spacing(1),
     backgroundColor: "#e91e63",
     color: "#fff",
-    fontSize: "0.5em",
+    fontSize: "0.58em",
+    fontWeight: "600",
     "&:hover": {
       transform: "scale(1.02)",
       backgroundColor: "rgba(233,30,99, 0.9)",
