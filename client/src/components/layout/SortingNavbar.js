@@ -123,10 +123,12 @@ function SortingNavbar(props) {
         <Grid item sm={12} xs={12} className={classes.container}>
           <Toolbar>
             <Grid className={classes.grow}>
-              <Button className={[classes.mainLogo]}>
-                <img src={logo} className={classes.logo} alt="logo" />
-                <Typography variant="h5">Sorting Algorithms</Typography>
-              </Button>
+              <Link to="/" style={{ textDecoration: "none" }}>
+                <Button className={[classes.mainLogo]}>
+                  <img src={logo} className={classes.logo} alt="logo" />
+                  <Typography variant="h5">Sorting Algorithms</Typography>
+                </Button>
+              </Link>
             </Grid>
             <Link to="/" style={{ textDecoration: "none" }}>
               <Button color="inherit" className={classes.switchPageButton}>

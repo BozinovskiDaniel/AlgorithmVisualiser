@@ -18,7 +18,7 @@ function SortingAlgorithms() {
     const width = window.innerWidth;
     const size = width / 7.6;
     for (let i = 0; i < size; i++) {
-      array.push(getRandomInt(5, 730));
+      array.push(getRandomInt(5, 650));
     }
     setBarsArray(array);
   }, []);

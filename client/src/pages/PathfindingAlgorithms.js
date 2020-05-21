@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import Node from "../components/Node";
+import Legend from "../components/Legend";
 import Navbar from "../components/layout/Navbar";
 import Typography from "@material-ui/core/Typography";
 
@@ -221,6 +222,17 @@ function PathfindingAlgorithms() {
       const rows = [];
       for (let col = 0; col < gridWidth; col++) {
         rows.push(createNode(col, row));
+
+        if (row === START_ROW && col === START_COL)
+          document.getElementById(`node-${row}-${col}`).className =
+            "node start-node";
+        else if (row === FINISH_ROW && col === FINISH_COL) {
+          document.getElementById(`node-${row}-${col}`).className =
+            "node end-node";
+        } else {
+          // Set grid to just node
+          document.getElementById(`node-${row}-${col}`).className = "node";
+        }
       }
       grid.push(rows);
     }
@@ -248,7 +260,7 @@ function PathfindingAlgorithms() {
         callAStar={aStarAlgorithm}
         clearGrid={clearGrid}
       />
-
+      <Legend />
       <div className="grid">
         <div className="textContainer">
           <Typography variant="h5">

@@ -28,7 +28,7 @@ const styles = (theme) => ({
   },
   buttonFontSize: {
     fontSize: "15px",
-    color: "#ddd",
+    color: "#eee",
     margin: "0 10px",
   },
   logo: {
@@ -129,11 +129,6 @@ function Navbar(props) {
                 <Typography variant="h5">Path Finding Algorithms</Typography>
               </Button>
             </Grid>
-            <Link to="/sorting" style={{ textDecoration: "none" }}>
-              <Button color="inherit" className={classes.switchPageButton}>
-                View Sorting Algorithms
-              </Button>
-            </Link>
             <Button
               color="inherit"
               className={classes.buttonFontSize}
