@@ -7,6 +7,9 @@ export const bubbleSort = (arr) => {
     for (let j = 0; j < len - i - 1; j++) {
       animations.push(["compare", j, j + 1]);
 
+      if (j === len - i - 2) {
+        animations.push(["sortedElement", j + 1, -1]);
+      }
       if (arr[j] > arr[j + 1]) {
         // Push values that we are swapping
         animations.push(["swap", j, j + 1]);

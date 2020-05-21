@@ -3,6 +3,7 @@ export const selectionSort = (arr) => {
   let n = arr.length;
   for (let i = 0; i < n - 1; i++) {
     // Find the minimum element in unsorted array
+
     let min_idx = i;
     for (let j = i + 1; j < n; j++) {
       animations.push(["compare", j, min_idx]);
@@ -11,6 +12,7 @@ export const selectionSort = (arr) => {
 
     // Swap the found minimum element with the first element
     animations.push(["swap", min_idx, i]); // Swap animation
+    animations.push(["sortedElement", i, -1]);
     swap(arr, min_idx, i);
   }
 

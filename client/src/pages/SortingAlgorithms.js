@@ -3,6 +3,10 @@ import { getMergeSortAnimations } from "../components/sortingAlgorithms/mergeSor
 import { quickSort } from "../components/sortingAlgorithms/quickSort";
 import { bubbleSort } from "../components/sortingAlgorithms/bubbleSort";
 import { selectionSort } from "../components/sortingAlgorithms/selectionSort";
+import {
+  insertionSort,
+  insertSort,
+} from "../components/sortingAlgorithms/insertionSort";
 import SortingNavbar from "../components/layout/SortingNavbar";
 
 const ANIMATION_SPEED_MS = 15;
@@ -21,35 +25,40 @@ function SortingAlgorithms() {
 
   const bubbleSortFunc = () => {
     const animations = bubbleSort(barsArray);
+
     // Loop over animations and perform swaps
     for (let i = 0; i < animations.length; i++) {
       setTimeout(() => {
         const arrayBars = document.getElementsByClassName("array-bar");
         const [action, indexOne, indexTwo] = animations[i];
         const barOneStyle = arrayBars[indexOne].style;
-        const barTwoStyle = arrayBars[indexTwo].style;
 
-        if (i > 0) {
-          const [actionBefore, indexOneBefore, indexTwoBefore] = animations[
-            i - 1
-          ];
-          if (actionBefore === "compare") {
-            arrayBars[indexOneBefore].style.backgroundColor =
-              "rgba(0, 190, 218, 0.75)";
-            arrayBars[indexTwoBefore].style.backgroundColor =
-              "rgba(0, 190, 218, 0.75)";
-          }
-        }
-
-        if (action === "swap") {
-          let heightOne = arrayBars[indexOne].style.height;
-          let heightTwo = arrayBars[indexTwo].style.height;
-
-          arrayBars[indexOne].style.height = `${heightTwo}`;
-          arrayBars[indexTwo].style.height = `${heightOne}`;
-        } else if (action === "compare") {
+        if (action === "sortedElement") {
           barOneStyle.backgroundColor = "#e91e63";
-          barTwoStyle.backgroundColor = "#e91e63";
+        } else {
+          if (i > 0) {
+            const [actionBefore, indexOneBefore, indexTwoBefore] = animations[
+              i - 1
+            ];
+            if (actionBefore === "compare") {
+              arrayBars[indexOneBefore].style.backgroundColor =
+                "rgba(0, 190, 218, 0.75)";
+              arrayBars[indexTwoBefore].style.backgroundColor =
+                "rgba(0, 190, 218, 0.75)";
+            }
+          }
+          const barTwoStyle = arrayBars[indexTwo].style;
+
+          if (action === "swap") {
+            let heightOne = arrayBars[indexOne].style.height;
+            let heightTwo = arrayBars[indexTwo].style.height;
+
+            arrayBars[indexOne].style.height = `${heightTwo}`;
+            arrayBars[indexTwo].style.height = `${heightOne}`;
+          } else if (action === "compare") {
+            barOneStyle.backgroundColor = "#e91e63";
+            barTwoStyle.backgroundColor = "#e91e63";
+          }
         }
       }, i * ANIMATION_SPEED_MS);
     }
@@ -123,29 +132,73 @@ function SortingAlgorithms() {
         const arrayBars = document.getElementsByClassName("array-bar");
         const [action, indexOne, indexTwo] = animations[i];
         const barOneStyle = arrayBars[indexOne].style;
-        const barTwoStyle = arrayBars[indexTwo].style;
 
-        if (i > 0) {
-          const [actionBefore, indexOneBefore, indexTwoBefore] = animations[
-            i - 1
-          ];
-          if (actionBefore === "compare") {
-            arrayBars[indexOneBefore].style.backgroundColor =
-              "rgba(0, 190, 218, 0.75)";
-            arrayBars[indexTwoBefore].style.backgroundColor =
-              "rgba(0, 190, 218, 0.75)";
+        if (action === "sortedElement") {
+          barOneStyle.backgroundColor = "#e91e63";
+        } else {
+          if (i > 0) {
+            const [actionBefore, indexOneBefore, indexTwoBefore] = animations[
+              i - 1
+            ];
+            if (actionBefore === "compare") {
+              arrayBars[indexOneBefore].style.backgroundColor =
+                "rgba(0, 190, 218, 0.75)";
+              arrayBars[indexTwoBefore].style.backgroundColor =
+                "rgba(0, 190, 218, 0.75)";
+            }
+          }
+          const barTwoStyle = arrayBars[indexTwo].style;
+
+          if (action === "swap") {
+            let heightOne = arrayBars[indexOne].style.height;
+            let heightTwo = arrayBars[indexTwo].style.height;
+
+            arrayBars[indexOne].style.height = `${heightTwo}`;
+            arrayBars[indexTwo].style.height = `${heightOne}`;
+          } else if (action === "compare") {
+            barOneStyle.backgroundColor = "#e91e63";
+            barTwoStyle.backgroundColor = "#e91e63";
           }
         }
+      }, i * ANIMATION_SPEED_MS);
+    }
+  };
 
-        if (action === "swap") {
-          let heightOne = arrayBars[indexOne].style.height;
-          let heightTwo = arrayBars[indexTwo].style.height;
+  const insertionSortFunc = () => {
+    const animations = insertSort(barsArray);
 
-          arrayBars[indexOne].style.height = `${heightTwo}`;
-          arrayBars[indexTwo].style.height = `${heightOne}`;
-        } else if (action === "compare") {
+    for (let i = 0; i < animations.length; i++) {
+      setTimeout(() => {
+        const arrayBars = document.getElementsByClassName("array-bar");
+        const [action, indexOne, indexTwo] = animations[i];
+        const barOneStyle = arrayBars[indexOne].style;
+
+        if (action === "sortedElement") {
           barOneStyle.backgroundColor = "#e91e63";
-          barTwoStyle.backgroundColor = "#e91e63";
+        } else {
+          if (i > 0) {
+            const [actionBefore, indexOneBefore, indexTwoBefore] = animations[
+              i - 1
+            ];
+            if (actionBefore === "compare") {
+              arrayBars[indexOneBefore].style.backgroundColor =
+                "rgba(0, 190, 218, 0.75)";
+              arrayBars[indexTwoBefore].style.backgroundColor =
+                "rgba(0, 190, 218, 0.75)";
+            }
+          }
+          const barTwoStyle = arrayBars[indexTwo].style;
+
+          if (action === "swap") {
+            let heightOne = arrayBars[indexOne].style.height;
+            let heightTwo = arrayBars[indexTwo].style.height;
+
+            arrayBars[indexOne].style.height = `${heightTwo}`;
+            arrayBars[indexTwo].style.height = `${heightOne}`;
+          } else if (action === "compare") {
+            barOneStyle.backgroundColor = "#e91e63";
+            barTwoStyle.backgroundColor = "#e91e63";
+          }
         }
       }, i * ANIMATION_SPEED_MS);
     }
@@ -173,6 +226,7 @@ function SortingAlgorithms() {
         callQuicksort={quickSortFunc}
         callBubblesort={bubbleSortFunc}
         callSelectionsort={selectionSortFunc}
+        callInsertionsort={insertionSortFunc}
       />
       <div className="array-container">
         {barsArray
