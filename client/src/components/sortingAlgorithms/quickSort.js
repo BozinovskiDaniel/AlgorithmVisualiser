@@ -10,20 +10,21 @@ export const quickSort = (arr, start, end) => {
 };
 
 const partition = (arr, start, end, animations) => {
-  let animation = {};
-  animation.compare = [start, end];
   let pivotIndex = start;
   let pivotValue = arr[end];
 
   for (let i = start; i < end; i++) {
+    animations.push = [start, end]; // Add color
+    animations.push = [start, end]; // Remove color
     if (arr[i] < pivotValue) {
-      animation.swap = [i, pivotIndex]; // Swap animation
+      animations.push = [i, pivotIndex]; // Add swap animation
       swap(arr, i, pivotIndex);
       pivotIndex++;
+    } else {
+      animations.push = [-1, -1];
     }
   }
-  swap(arr, pivotIndex, end);
-  animations.push(animation);
+  swap(arr, pivotIndex, end); // Swap the pivotIndex val with the end
   return pivotIndex;
 };
 

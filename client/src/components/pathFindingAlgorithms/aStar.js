@@ -19,7 +19,7 @@ export const performAStar = (grid, startNode, endNode) => {
     // Add currNode to closedList
     closedList.push(currNode);
 
-    // If the node is found, return the path
+    // If the node is found, return the reversed path and the ndoes visited
     if (endNode === currNode) {
       let path = [];
       let curr = currNode;
@@ -39,7 +39,7 @@ export const performAStar = (grid, startNode, endNode) => {
 
       if (closedList.includes(child)) continue; // If child is in the closed list
 
-      // Calculate the heuristic distances
+      // Calculate the heuristic distances (Manhattan as diagonals aren't allowed in our grid)
       child.g = currNode.g + distanceBetweenNodes(child, currNode);
       child.h = distanceBetweenNodes(child, endNode);
       child.f = child.g + child.h;

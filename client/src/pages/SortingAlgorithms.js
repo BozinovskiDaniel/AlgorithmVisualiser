@@ -4,7 +4,7 @@ import { quickSort } from "../components/sortingAlgorithms/quickSort";
 import { bubbleSort } from "../components/sortingAlgorithms/bubbleSort";
 import SortingNavbar from "../components/layout/SortingNavbar";
 
-const ANIMATION_SPEED_MS = 10;
+const ANIMATION_SPEED_MS = 3;
 
 function SortingAlgorithms() {
   const [barsArray, setBarsArray] = useState(null);
@@ -20,24 +20,33 @@ function SortingAlgorithms() {
 
   const bubbleSortFunc = () => {
     const animations = bubbleSort(barsArray);
-    console.log(animations);
 
     // Loop over animations and perform swaps
     for (let i = 0; i < animations.length; i++) {
-      setTimeout(() => {
-        //console.log(animations[i]);
-        const arrayBars = document.getElementsByClassName("array-bar");
-        const indexOne = animations[i].swap[0];
-        const indexTwo = animations[i].swap[1];
-        //const isColorChange = i % 3 !== 2;
-        let heightOne = arrayBars[indexTwo].style.height;
-        let heightTwo = arrayBars[indexOne].style.height;
+      const arrBars = document.getElementsByClassName("array-bar");
+      const [indexOne, indexTwo] = animations[i];
+      if (indexOne === -1 && indexTwo === -1) continue;
+      const barOneStyle = arrBars[indexOne].style;
+      const barTwoStyle = arrBars[indexTwo].style;
+      const isColorChange = i % 3 !== 2;
 
-        // Swap the values here
-        arrayBars[indexOne].style.height = `${heightOne}`;
-
-        arrayBars[indexTwo].style.height = `${heightTwo}`;
-      }, ANIMATION_SPEED_MS * i);
+      if (isColorChange) {
+        const color =
+          i % 3 === 0 ? "rgba(30, 139, 195, 0.9)" : "rgba(0, 0, 0, 0.5)";
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        // If it's the swap
+        setTimeout(() => {
+          let heightOne = barOneStyle.height;
+          let heightTwo = barTwoStyle.height;
+          // Swap the values here
+          barTwoStyle.height = `${heightOne}`;
+          barOneStyle.height = `${heightTwo}`;
+        }, i * ANIMATION_SPEED_MS);
+      }
     }
   };
 
@@ -67,12 +76,34 @@ function SortingAlgorithms() {
 
   const quickSortFunc = () => {
     const animations = quickSort(barsArray, 0, barsArray.length - 1);
-    console.log(animations);
-    // for (let i = 0; i < animations.length; i++) {
-    //   setTimeout(() => {
-    //     const { compare, swap } = animations[i];
-    //   }, 20 * i);
-    // }
+
+    // Loop over animations and perform swaps
+    for (let i = 0; i < animations.length; i++) {
+      const arrBars = document.getElementsByClassName("array-bar");
+      const [indexOne, indexTwo] = animations[i];
+      if (indexOne === -1 && indexTwo === -1) continue;
+      const barOneStyle = arrBars[indexOne].style;
+      const barTwoStyle = arrBars[indexTwo].style;
+      const isColorChange = i % 3 !== 2;
+
+      if (isColorChange) {
+        const color =
+          i % 3 === 0 ? "rgba(30, 139, 195, 0.9)" : "rgba(0, 0, 0, 0.5)";
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        // If it's the swap
+        setTimeout(() => {
+          let heightOne = barOneStyle.height;
+          let heightTwo = barTwoStyle.height;
+          // Swap the values here
+          barTwoStyle.height = `${heightOne}`;
+          barOneStyle.height = `${heightTwo}`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
   };
 
   const resetArray = () => {
