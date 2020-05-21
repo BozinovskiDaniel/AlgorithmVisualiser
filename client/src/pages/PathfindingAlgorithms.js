@@ -15,16 +15,22 @@ import { performBFS } from "../components/pathFindingAlgorithms/breadthFirstSear
 import { performAStar } from "../components/pathFindingAlgorithms/aStar";
 
 // Global vars
-const START_ROW = 10;
-const START_COL = 15;
-const FINISH_ROW = 10;
-const FINISH_COL = 29;
+let startRow = 10;
+let startCol = 15;
+let endRow = 10;
+let endCol = 29;
 
 function PathfindingAlgorithms() {
   const [grid, setGrid] = useState(null);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
   const [gridHeight, setGridHeight] = useState(null);
   const [gridWidth, setGridWidth] = useState(null);
+
+  // Set start and end nodes
+  const [startRow, setStartRow] = useState(10);
+  const [startCol, setStartCol] = useState(15);
+  const [endRow, setEndRow] = useState(10);
+  const [endCol, setEndCol] = useState(29);
 
   useEffect(() => {
     const grid = [];
@@ -46,12 +52,24 @@ function PathfindingAlgorithms() {
   }, []);
 
   const handleMouseDown = (row, col) => {
+    if (row === startRow && col === startCol) {
+      console.log("start node");
+      return;
+    }
+
     const newGrid = getGridWithWallToggled(grid, row, col);
+    console.log("hey");
     setGrid(newGrid);
     setMouseIsPressed(true);
   };
 
   const handleMouseEnter = (row, col) => {
+    if (row === startRow && col === startCol) {
+      console.log("enter");
+      setStartRow(row);
+      setStartCol(col);
+      return;
+    }
     if (!mouseIsPressed) return;
     const newGrid = getGridWithWallToggled(grid, row, col);
     setGrid(newGrid);
@@ -173,16 +191,16 @@ function PathfindingAlgorithms() {
   };
 
   const dijkstrasAlgorithm = () => {
-    const startNode = grid[START_ROW][START_COL];
-    const endNode = grid[FINISH_ROW][FINISH_COL];
+    const startNode = grid[startRow][startCol];
+    const endNode = grid[endRow][endCol];
     const visitedNodesInorder = dijkstra(grid, startNode, endNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
     animateDijkstras(visitedNodesInorder, nodesInShortestPathOrder);
   };
 
   const dfsAlgorithm = () => {
-    const startNode = grid[START_ROW][START_COL];
-    const endNode = grid[FINISH_ROW][FINISH_COL];
+    const startNode = grid[startRow][startCol];
+    const endNode = grid[endRow][endCol];
     const visitedNodesInOrder = performDFS(
       grid,
       startNode,
@@ -194,8 +212,8 @@ function PathfindingAlgorithms() {
   };
 
   const bfsAlgorithm = () => {
-    const startNode = grid[START_ROW][START_COL];
-    const endNode = grid[FINISH_ROW][FINISH_COL];
+    const startNode = grid[startRow][startCol];
+    const endNode = grid[endRow][endCol];
     const visitedNodesInOrder = performBFS(
       grid,
       startNode,
@@ -208,8 +226,8 @@ function PathfindingAlgorithms() {
   };
 
   const aStarAlgorithm = () => {
-    const startNode = grid[START_ROW][START_COL];
-    const endNode = grid[FINISH_ROW][FINISH_COL];
+    const startNode = grid[startRow][startCol];
+    const endNode = grid[endRow][endCol];
     const path = performAStar(grid, startNode, endNode, gridHeight, gridWidth);
     animateDijkstras(path[0], path[1]);
   };
@@ -223,10 +241,10 @@ function PathfindingAlgorithms() {
       for (let col = 0; col < gridWidth; col++) {
         rows.push(createNode(col, row));
 
-        if (row === START_ROW && col === START_COL)
+        if (row === startRow && col === startCol)
           document.getElementById(`node-${row}-${col}`).className =
             "node start-node";
-        else if (row === FINISH_ROW && col === FINISH_COL) {
+        else if (row === endRow && col === endCol) {
           document.getElementById(`node-${row}-${col}`).className =
             "node end-node";
         } else {
@@ -237,6 +255,22 @@ function PathfindingAlgorithms() {
       grid.push(rows);
     }
     setGrid(grid);
+  };
+
+  const createNode = (col, row) => {
+    return {
+      col,
+      row,
+      isStart: row === startRow && col === startCol,
+      isEnd: row === endRow && col === endCol,
+      distance: Infinity,
+      isVisited: false,
+      isWall: false,
+      previousNode: null,
+      f: 0,
+      g: 0,
+      h: 0,
+    };
   };
 
   const mapping = (row) => {
@@ -281,22 +315,6 @@ function PathfindingAlgorithms() {
     </div>
   );
 }
-
-const createNode = (col, row) => {
-  return {
-    col,
-    row,
-    isStart: row === START_ROW && col === START_COL,
-    isEnd: row === FINISH_ROW && col === FINISH_COL,
-    distance: Infinity,
-    isVisited: false,
-    isWall: false,
-    previousNode: null,
-    f: 0,
-    g: 0,
-    h: 0,
-  };
-};
 
 const getGridWithWallToggled = (grid, row, col) => {
   const newGrid = grid.slice();
