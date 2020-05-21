@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import { getMergeSortAnimations } from "../components/sortingAlgorithms/mergeSort";
 import { quickSort } from "../components/sortingAlgorithms/quickSort";
 import { bubbleSort } from "../components/sortingAlgorithms/bubbleSort";
+import { selectionSort } from "../components/sortingAlgorithms/selectionSort";
 import SortingNavbar from "../components/layout/SortingNavbar";
 
-const ANIMATION_SPEED_MS = 3;
+const ANIMATION_SPEED_MS = 15;
 
 function SortingAlgorithms() {
   const [barsArray, setBarsArray] = useState(null);
   useEffect(() => {
     const array = [];
     const width = window.innerWidth;
-    const size = width / 6.8;
+    const size = width / 7.6;
     for (let i = 0; i < size; i++) {
       array.push(getRandomInt(5, 730));
     }
@@ -20,33 +21,37 @@ function SortingAlgorithms() {
 
   const bubbleSortFunc = () => {
     const animations = bubbleSort(barsArray);
-
     // Loop over animations and perform swaps
     for (let i = 0; i < animations.length; i++) {
-      const arrBars = document.getElementsByClassName("array-bar");
-      const [indexOne, indexTwo] = animations[i];
-      if (indexOne === -1 && indexTwo === -1) continue;
-      const barOneStyle = arrBars[indexOne].style;
-      const barTwoStyle = arrBars[indexTwo].style;
-      const isColorChange = i % 3 !== 2;
+      setTimeout(() => {
+        const arrayBars = document.getElementsByClassName("array-bar");
+        const [action, indexOne, indexTwo] = animations[i];
+        const barOneStyle = arrayBars[indexOne].style;
+        const barTwoStyle = arrayBars[indexTwo].style;
 
-      if (isColorChange) {
-        const color =
-          i % 3 === 0 ? "rgba(30, 139, 195, 0.9)" : "rgba(0, 0, 0, 0.5)";
-        setTimeout(() => {
-          barOneStyle.backgroundColor = color;
-          barTwoStyle.backgroundColor = color;
-        }, i * ANIMATION_SPEED_MS);
-      } else {
-        // If it's the swap
-        setTimeout(() => {
-          let heightOne = barOneStyle.height;
-          let heightTwo = barTwoStyle.height;
-          // Swap the values here
-          barTwoStyle.height = `${heightOne}`;
-          barOneStyle.height = `${heightTwo}`;
-        }, i * ANIMATION_SPEED_MS);
-      }
+        if (i > 0) {
+          const [actionBefore, indexOneBefore, indexTwoBefore] = animations[
+            i - 1
+          ];
+          if (actionBefore === "compare") {
+            arrayBars[indexOneBefore].style.backgroundColor =
+              "rgba(0, 190, 218, 0.75)";
+            arrayBars[indexTwoBefore].style.backgroundColor =
+              "rgba(0, 190, 218, 0.75)";
+          }
+        }
+
+        if (action === "swap") {
+          let heightOne = arrayBars[indexOne].style.height;
+          let heightTwo = arrayBars[indexTwo].style.height;
+
+          arrayBars[indexOne].style.height = `${heightTwo}`;
+          arrayBars[indexTwo].style.height = `${heightOne}`;
+        } else if (action === "compare") {
+          barOneStyle.backgroundColor = "#e91e63";
+          barTwoStyle.backgroundColor = "#e91e63";
+        }
+      }, i * ANIMATION_SPEED_MS);
     }
   };
 
@@ -76,43 +81,87 @@ function SortingAlgorithms() {
 
   const quickSortFunc = () => {
     const animations = quickSort(barsArray, 0, barsArray.length - 1);
-
     // Loop over animations and perform swaps
     for (let i = 0; i < animations.length; i++) {
-      const arrBars = document.getElementsByClassName("array-bar");
-      const [indexOne, indexTwo] = animations[i];
-      if (indexOne === -1 && indexTwo === -1) continue;
-      const barOneStyle = arrBars[indexOne].style;
-      const barTwoStyle = arrBars[indexTwo].style;
-      const isColorChange = i % 3 !== 2;
+      setTimeout(() => {
+        const arrayBars = document.getElementsByClassName("array-bar");
+        const [action, indexOne, indexTwo] = animations[i];
+        const barOneStyle = arrayBars[indexOne].style;
+        const barTwoStyle = arrayBars[indexTwo].style;
 
-      if (isColorChange) {
-        const color =
-          i % 3 === 0 ? "rgba(30, 139, 195, 0.9)" : "rgba(0, 0, 0, 0.5)";
-        setTimeout(() => {
-          barOneStyle.backgroundColor = color;
-          barTwoStyle.backgroundColor = color;
-        }, i * ANIMATION_SPEED_MS);
-      } else {
-        // If it's the swap
-        setTimeout(() => {
-          let heightOne = barOneStyle.height;
-          let heightTwo = barTwoStyle.height;
-          // Swap the values here
-          barTwoStyle.height = `${heightOne}`;
-          barOneStyle.height = `${heightTwo}`;
-        }, i * ANIMATION_SPEED_MS);
-      }
+        if (i > 0) {
+          const [actionBefore, indexOneBefore, indexTwoBefore] = animations[
+            i - 1
+          ];
+          if (actionBefore === "compare") {
+            arrayBars[indexOneBefore].style.backgroundColor =
+              "rgba(0, 190, 218, 0.75)";
+            arrayBars[indexTwoBefore].style.backgroundColor =
+              "rgba(0, 190, 218, 0.75)";
+          }
+        }
+
+        if (action === "swap") {
+          let heightOne = arrayBars[indexOne].style.height;
+          let heightTwo = arrayBars[indexTwo].style.height;
+
+          arrayBars[indexOne].style.height = `${heightTwo}`;
+          arrayBars[indexTwo].style.height = `${heightOne}`;
+        } else if (action === "compare") {
+          barOneStyle.backgroundColor = "#e91e63";
+          barTwoStyle.backgroundColor = "#e91e63";
+        }
+      }, i * ANIMATION_SPEED_MS);
+    }
+  };
+
+  const selectionSortFunc = () => {
+    const animations = selectionSort(barsArray);
+    // Loop over animations and perform swaps
+    for (let i = 0; i < animations.length; i++) {
+      setTimeout(() => {
+        const arrayBars = document.getElementsByClassName("array-bar");
+        const [action, indexOne, indexTwo] = animations[i];
+        const barOneStyle = arrayBars[indexOne].style;
+        const barTwoStyle = arrayBars[indexTwo].style;
+
+        if (i > 0) {
+          const [actionBefore, indexOneBefore, indexTwoBefore] = animations[
+            i - 1
+          ];
+          if (actionBefore === "compare") {
+            arrayBars[indexOneBefore].style.backgroundColor =
+              "rgba(0, 190, 218, 0.75)";
+            arrayBars[indexTwoBefore].style.backgroundColor =
+              "rgba(0, 190, 218, 0.75)";
+          }
+        }
+
+        if (action === "swap") {
+          let heightOne = arrayBars[indexOne].style.height;
+          let heightTwo = arrayBars[indexTwo].style.height;
+
+          arrayBars[indexOne].style.height = `${heightTwo}`;
+          arrayBars[indexTwo].style.height = `${heightOne}`;
+        } else if (action === "compare") {
+          barOneStyle.backgroundColor = "#e91e63";
+          barTwoStyle.backgroundColor = "#e91e63";
+        }
+      }, i * ANIMATION_SPEED_MS);
     }
   };
 
   const resetArray = () => {
     const array = [];
     const width = window.innerWidth;
-    const size = width / 6.8;
+    const size = width / 7.6;
     for (let i = 0; i < size; i++) {
       array.push(getRandomInt(5, 730));
     }
+
+    const arrayBars = document.getElementsByClassName("array-bar");
+    for (let bar of arrayBars)
+      bar.style.backgroundColor = "rgba(0, 0, 66, 0.75)";
     setBarsArray(array);
   };
 
@@ -123,6 +172,7 @@ function SortingAlgorithms() {
         callMergesort={mergeSortFunc}
         callQuicksort={quickSortFunc}
         callBubblesort={bubbleSortFunc}
+        callSelectionsort={selectionSortFunc}
       />
       <div className="array-container">
         {barsArray

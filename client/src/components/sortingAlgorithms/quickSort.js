@@ -1,31 +1,40 @@
-let animations = [];
-
 export const quickSort = (arr, start, end) => {
-  if (start >= end) return;
-  let index = partition(arr, start, end, animations);
-  quickSort(arr, start, index - 1);
-  quickSort(arr, index + 1, end);
-
+  let animations = [];
+  quickSortHelper(arr, start, end, animations);
   return animations;
 };
 
-const partition = (arr, start, end, animations) => {
-  let pivotIndex = start;
-  let pivotValue = arr[end];
+const quickSortHelper = (arr, start, end, animations) => {
+  if (start < end) {
+    let pivot = partition(arr, start, end, animations);
+    quickSortHelper(arr, start, pivot - 1, animations);
+    quickSortHelper(arr, pivot + 1, end, animations);
+  }
+};
 
-  for (let i = start; i < end; i++) {
-    animations.push = [start, end]; // Add color
-    animations.push = [start, end]; // Remove color
-    if (arr[i] < pivotValue) {
-      animations.push = [i, pivotIndex]; // Add swap animation
-      swap(arr, i, pivotIndex);
-      pivotIndex++;
+const partition = (arr, start, end, animations) => {
+  let pivot = end;
+
+  let i = start - 1,
+    j = start;
+
+  while (j < pivot) {
+    animations.push(["compare", j, pivot]);
+    if (arr[j] > arr[pivot]) {
+      j++;
     } else {
-      animations.push = [-1, -1];
+      i++;
+      animations.push(["swap", j, i]);
+      swap(arr, j, i);
+      j++;
     }
   }
-  swap(arr, pivotIndex, end); // Swap the pivotIndex val with the end
-  return pivotIndex;
+
+  //The value at arr[i + 1] will be greater than the value of arr[pivot]
+  animations.push(["swap", i + 1, pivot]);
+  swap(arr, i + 1, pivot);
+
+  return i + 1;
 };
 
 const swap = (arr, a, b) => {

@@ -87,7 +87,7 @@ function SortingNavbar(props) {
     callMergesort,
     callQuicksort,
     callBubblesort,
-    callAStar,
+    callSelectionsort,
     clearGrid,
   } = props;
 
@@ -105,7 +105,7 @@ function SortingNavbar(props) {
     else if (selectedAlgo === "Mergesort") callMergesort();
     else if (selectedAlgo === "Quicksort") callQuicksort();
     else if (selectedAlgo === "Bubblesort") callBubblesort();
-    else if (selectedAlgo === "A*") callAStar();
+    else if (selectedAlgo === "Selectionsort") callSelectionsort();
   };
 
   const setAlgorithm = (algo) => {
@@ -168,7 +168,9 @@ function SortingNavbar(props) {
               <MenuItem onClick={() => setAlgorithm("Bubblesort")}>
                 Bubble sort
               </MenuItem>
-              <MenuItem onClick={() => setAlgorithm("A*")}>Heap sort</MenuItem>
+              <MenuItem onClick={() => setAlgorithm("Selectionsort")}>
+                Selection sort
+              </MenuItem>
             </Menu>
             <Button
               color="inherit"

@@ -1,4 +1,10 @@
-export const performAStar = (grid, startNode, endNode) => {
+export const performAStar = (
+  grid,
+  startNode,
+  endNode,
+  gridHeight,
+  gridWidth
+) => {
   let openList = [];
   let closedList = [];
   let nodesVisited = [];
@@ -30,7 +36,7 @@ export const performAStar = (grid, startNode, endNode) => {
       return [nodesVisited, path.reverse()];
     }
 
-    let children = adjacentNodes(grid, currNode); // Get adjacent nodes
+    let children = adjacentNodes(grid, currNode, gridHeight, gridWidth); // Get adjacent nodes
 
     // Loop over the adjacent nodes
     for (let child of children) {
@@ -64,7 +70,7 @@ const distanceBetweenNodes = (node, currentNode) => {
 };
 
 // Finds the adjacent nodes of a given node in a Grid
-const adjacentNodes = (grid, node) => {
+const adjacentNodes = (grid, node, gridHeight, gridWidth) => {
   const adjNodes = [];
 
   // Assignments
@@ -77,11 +83,13 @@ const adjacentNodes = (grid, node) => {
   const rowAfter = nodeRow + 1;
 
   // Conditions
-  if (rowBefore >= 0 && rowBefore < 19)
+  if (rowBefore >= 0 && rowBefore < gridHeight)
     adjNodes.push(grid[nodeRow - 1][nodeCol]);
-  if (colAfter >= 0 && colAfter < 46) adjNodes.push(grid[nodeRow][nodeCol + 1]);
-  if (rowAfter >= 0 && rowAfter < 19) adjNodes.push(grid[nodeRow + 1][nodeCol]);
-  if (colBefore >= 0 && colBefore < 46)
+  if (colAfter >= 0 && colAfter < gridWidth)
+    adjNodes.push(grid[nodeRow][nodeCol + 1]);
+  if (rowAfter >= 0 && rowAfter < gridHeight)
+    adjNodes.push(grid[nodeRow + 1][nodeCol]);
+  if (colBefore >= 0 && colBefore < gridWidth)
     adjNodes.push(grid[nodeRow][nodeCol - 1]);
 
   return adjNodes;

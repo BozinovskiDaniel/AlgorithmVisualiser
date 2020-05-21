@@ -22,13 +22,21 @@ const FINISH_COL = 29;
 function PathfindingAlgorithms() {
   const [grid, setGrid] = useState(null);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
+  const [gridHeight, setGridHeight] = useState(null);
+  const [gridWidth, setGridWidth] = useState(null);
 
   useEffect(() => {
     const grid = [];
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const gridHeight = height / 46;
+    const gridWidth = width / 35;
+    setGridHeight(gridHeight);
+    setGridWidth(gridWidth);
 
-    for (let row = 0; row < 19; row++) {
+    for (let row = 0; row < gridHeight; row++) {
       const rows = [];
-      for (let col = 0; col < 46; col++) {
+      for (let col = 0; col < gridWidth; col++) {
         rows.push(createNode(col, row));
       }
       grid.push(rows);
@@ -101,11 +109,12 @@ function PathfindingAlgorithms() {
   };
 
   // Animate the Depth First Search Algorithm
-  const animateDFS = (visitedNodesInOrder, endNode) => {
+  const animateDFS = (visitedNodesInOrder, startNode, endNode) => {
+    console.log(visitedNodesInOrder);
     for (let i = 0; i < visitedNodesInOrder.length; i++) {
       if (visitedNodesInOrder[i - 1] === endNode) {
         setTimeout(() => {
-          animatePath(visitedNodesInOrder, endNode);
+          animatePath(visitedNodesInOrder, startNode, endNode);
         }, 10 * i);
         return;
       }
@@ -124,13 +133,26 @@ function PathfindingAlgorithms() {
     }
   };
 
+  const getNodesInOrder = (startNode, endNode) => {
+    const nodesInShortestPathOrder = [];
+
+    let currentNode = endNode;
+    while (currentNode !== startNode) {
+      nodesInShortestPathOrder.unshift(currentNode);
+      currentNode = currentNode.previousNode;
+    }
+    return nodesInShortestPathOrder;
+  };
+
   // Animate the path after the algorithm is complete
-  const animatePath = (visitedNodesInOrder, endNode) => {
-    for (let i = 0; i < visitedNodesInOrder.length; i++) {
-      if (visitedNodesInOrder[i - 1] === endNode) return;
+  const animatePath = (visitedNodesInOrder, startNode, endNode) => {
+    const nodesInOrder = getNodesInOrder(startNode, endNode);
+
+    for (let i = 0; i < nodesInOrder.length; i++) {
+      if (nodesInOrder[i - 1] === endNode) return;
       setTimeout(() => {
         // Set the node class
-        const node = visitedNodesInOrder[i];
+        const node = nodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node shortestPath-node";
       }, 50 * i);
@@ -160,14 +182,26 @@ function PathfindingAlgorithms() {
   const dfsAlgorithm = () => {
     const startNode = grid[START_ROW][START_COL];
     const endNode = grid[FINISH_ROW][FINISH_COL];
-    const visitedNodesInOrder = performDFS(grid, startNode, endNode);
-    animateDFS(visitedNodesInOrder, endNode);
+    const visitedNodesInOrder = performDFS(
+      grid,
+      startNode,
+      endNode,
+      gridHeight,
+      gridWidth
+    );
+    animateDFS(visitedNodesInOrder, startNode, endNode);
   };
 
   const bfsAlgorithm = () => {
     const startNode = grid[START_ROW][START_COL];
     const endNode = grid[FINISH_ROW][FINISH_COL];
-    const visitedNodesInOrder = performBFS(grid, startNode, endNode);
+    const visitedNodesInOrder = performBFS(
+      grid,
+      startNode,
+      endNode,
+      gridHeight,
+      gridWidth
+    );
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
     animateBFS(visitedNodesInOrder, nodesInShortestPathOrder);
   };
@@ -175,16 +209,17 @@ function PathfindingAlgorithms() {
   const aStarAlgorithm = () => {
     const startNode = grid[START_ROW][START_COL];
     const endNode = grid[FINISH_ROW][FINISH_COL];
-    const path = performAStar(grid, startNode, endNode);
+    const path = performAStar(grid, startNode, endNode, gridHeight, gridWidth);
     animateDijkstras(path[0], path[1]);
   };
 
+  // Should clear all node colors, walls, etc
   const clearGrid = () => {
     const grid = [];
 
-    for (let row = 0; row < 19; row++) {
+    for (let row = 0; row < gridHeight; row++) {
       const rows = [];
-      for (let col = 0; col < 46; col++) {
+      for (let col = 0; col < gridWidth; col++) {
         rows.push(createNode(col, row));
       }
       grid.push(rows);
