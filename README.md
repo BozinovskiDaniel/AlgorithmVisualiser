@@ -4,7 +4,7 @@
 
 <br />
 
-### Algorithms
+### Algorithms Implemented
 
 ##### Path Finding
 
