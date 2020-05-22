@@ -20,7 +20,6 @@
 ##### Sorting
 
 - <a href="https://en.wikipedia.org/wiki/Merge_sort" target="_blank"><b>Merge Sort:</b></a> Merge sort is an efficient, general-purpose, comparison-based sorting algorithm that utilises a technique of divide and conquer to sort
-<br />
 
 - <a href="https://en.wikipedia.org/wiki/Quicksort" target="_blank"><b>Quick Sort:</b></a> Quicksort (sometimes called partition-exchange sort) is an efficient sorting algorithm. Developed by British computer scientist Tony Hoare and published in 1961, it is still a commonly used algorithm for sorting. When implemented well, it can be about two or three times faster than its main competitors, merge sort and heapsort.
   <br />
