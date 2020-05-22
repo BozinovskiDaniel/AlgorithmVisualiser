@@ -43,7 +43,7 @@ const styles = (theme) => ({
   },
   legendText: {
     color: "rgba(0,0,0,0.7)",
-    fontSize: "1.5em",
+    fontSize: "1.4em",
   },
   wallNode: {
     height: 25,
