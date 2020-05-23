@@ -53,19 +53,16 @@ function PathfindingAlgorithms() {
 
   const handleMouseDown = (row, col) => {
     if (row === startRow && col === startCol) {
-      console.log("start node");
       return;
     }
 
     const newGrid = getGridWithWallToggled(grid, row, col);
-    console.log("hey");
     setGrid(newGrid);
     setMouseIsPressed(true);
   };
 
   const handleMouseEnter = (row, col) => {
     if (row === startRow && col === startCol) {
-      console.log("enter");
       setStartRow(row);
       setStartCol(col);
       return;
