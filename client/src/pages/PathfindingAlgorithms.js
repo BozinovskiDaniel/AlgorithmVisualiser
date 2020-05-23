@@ -33,7 +33,7 @@ function PathfindingAlgorithms() {
     const width = window.innerWidth;
     const height = window.innerHeight;
     const gridHeight = height / 46;
-    const gridWidth = width / 35;
+    const gridWidth = width / 32;
     setGridHeight(gridHeight);
     setGridWidth(gridWidth);
 

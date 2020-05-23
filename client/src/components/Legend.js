@@ -83,8 +83,9 @@ const styles = (theme) => ({
   unvisitedNode: {
     height: 25,
     width: 25,
-    border: "1px solid rgba(30, 139, 195, 0.5)",
+    border: "1px solid rgba(30, 139, 195, 0.3)",
     borderRadius: 3,
+    backgroundColor: "#fff",
     "&:hover": {
       transform: "scale(1.1)",
     },
