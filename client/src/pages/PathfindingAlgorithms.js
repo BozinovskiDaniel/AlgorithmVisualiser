@@ -18,10 +18,11 @@ function PathfindingAlgorithms() {
   const [grid, setGrid] = useState(null);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
   const [pressedStartNode, setPressedStartNode] = useState(false);
+  const [pressedEndNode, setPressedEndNode] = useState(false);
   const [gridHeight, setGridHeight] = useState(null);
   const [gridWidth, setGridWidth] = useState(null);
 
-  // Set start and end nodes
+  // Start and end nodes
   const [startRow, setStartRow] = useState(10);
   const [startCol, setStartCol] = useState(15);
   const [endRow, setEndRow] = useState(10);
@@ -50,6 +51,9 @@ function PathfindingAlgorithms() {
     if (row === startRow && col === startCol) {
       setPressedStartNode(true);
       return;
+    } else if (row === endRow && col === endCol) {
+      setPressedEndNode(true);
+      return;
     }
 
     const newGrid = getGridWithWallToggled(grid, row, col);
@@ -58,8 +62,16 @@ function PathfindingAlgorithms() {
   };
 
   const handleMouseEnter = (row, col) => {
+    // Set start node
     if (pressedStartNode) {
       const newGrid = getGridWithStartMoved(grid, row, col);
+      setGrid(newGrid);
+      return;
+    }
+
+    // Set end node
+    else if (pressedEndNode) {
+      const newGrid = getGridWithEndMoved(grid, row, col);
       setGrid(newGrid);
       return;
     } else if (!mouseIsPressed) return;
@@ -68,14 +80,13 @@ function PathfindingAlgorithms() {
   };
 
   const handleMouseUp = () => {
-    //console.log("mouse up");
+    // Set all to false
     setPressedStartNode(false);
+    setPressedEndNode(false);
     setMouseIsPressed(false);
   };
 
   const getGridWithStartMoved = (grid, row, col) => {
-    // Remove prev start node
-
     const newGrid = grid.slice();
     const node = newGrid[row][col];
 
@@ -87,6 +98,24 @@ function PathfindingAlgorithms() {
       const newNode = {
         ...node,
         isStart: !node.isStart,
+      };
+      newGrid[row][col] = newNode;
+      return newGrid;
+    }
+  };
+
+  const getGridWithEndMoved = (grid, row, col) => {
+    const newGrid = grid.slice();
+    const node = newGrid[row][col];
+
+    if (!node.isWall) {
+      newGrid[endRow][endCol].isEnd = false;
+      setEndRow(row);
+      setEndCol(col);
+
+      const newNode = {
+        ...node,
+        isEnd: !node.isEnd,
       };
       newGrid[row][col] = newNode;
       return newGrid;
