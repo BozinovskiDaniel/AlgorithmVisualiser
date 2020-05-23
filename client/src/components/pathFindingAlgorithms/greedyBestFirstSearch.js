@@ -1,4 +1,4 @@
-export const performAStar = (
+export const performGreedyBFS = (
   grid,
   startNode,
   endNode,
@@ -44,10 +44,8 @@ export const performAStar = (
 
       if (closedList.includes(child)) continue; // If child is in the closed list
 
-      // Calculate the heuristic distances (Manhattan as diagonals aren't allowed in our grid)
-      child.g = currNode.g + distanceBetweenNodes(child, currNode);
-      child.h = distanceBetweenNodes(child, endNode);
-      child.f = child.g + child.h;
+      // Set f to the distance between the curr node to end node
+      child.f = distanceBetweenNodes(child, endNode);
 
       // If child is already in open list, skip this iteration
       for (let openListChild of openList) {

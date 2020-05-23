@@ -91,6 +91,7 @@ function Navbar(props) {
     callDFS,
     callBFS,
     callAStar,
+    callGreedyBFS,
     clearGrid,
   } = props;
 
@@ -109,6 +110,7 @@ function Navbar(props) {
     else if (selectedAlgo === "DFS") callDFS();
     else if (selectedAlgo === "BFS") callBFS();
     else if (selectedAlgo === "A*") callAStar();
+    else if (selectedAlgo === "GreedyBFS") callGreedyBFS();
   };
 
   const setAlgorithm = (algo) => {
@@ -168,6 +170,9 @@ function Navbar(props) {
               </MenuItem>
               <MenuItem onClick={() => setAlgorithm("A*")}>
                 A* Algorithm
+              </MenuItem>
+              <MenuItem onClick={() => setAlgorithm("GreedyBFS")}>
+                Greedy Best First Search
               </MenuItem>
             </Menu>
             <Button

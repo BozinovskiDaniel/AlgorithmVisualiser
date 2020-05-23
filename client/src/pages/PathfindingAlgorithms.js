@@ -4,6 +4,13 @@ import Legend from "../components/Legend";
 import Navbar from "../components/layout/Navbar";
 import Typography from "@material-ui/core/Typography";
 
+// Helper
+import {
+  animateDijkstras,
+  animateBFS,
+  animateDFS,
+} from "../components/Animate";
+
 // Algorithms
 import {
   dijkstra,
@@ -13,6 +20,7 @@ import {
 import { performDFS } from "../components/pathFindingAlgorithms/depthFirstSearch";
 import { performBFS } from "../components/pathFindingAlgorithms/breadthFirstSearch";
 import { performAStar } from "../components/pathFindingAlgorithms/aStar";
+import { performGreedyBFS } from "../components/pathFindingAlgorithms/greedyBestFirstSearch";
 
 function PathfindingAlgorithms() {
   const [grid, setGrid] = useState(null);
@@ -122,123 +130,13 @@ function PathfindingAlgorithms() {
     }
   };
 
-  const animateDijkstras = (visitedNodesInorder, nodesInShortestPathOrder) => {
-    for (let i = 0; i <= visitedNodesInorder.length; i++) {
-      if (i === visitedNodesInorder.length) {
-        setTimeout(() => {
-          animateShortestPath(nodesInShortestPathOrder);
-        }, 10 * i);
-        return;
-      }
-
-      setTimeout(() => {
-        const node = visitedNodesInorder[i];
-        const newGrid = grid.slice();
-        const newNode = {
-          ...node,
-          isVisited: true,
-        };
-        newGrid[node.row][node.col] = newNode;
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node visited-node";
-        //setGrid(newGrid);
-      }, 10 * i);
-    }
-  };
-
-  const animateBFS = (visitedNodesInOrder, nodesInShortestPathOrder) => {
-    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
-      if (i === visitedNodesInOrder.length) {
-        setTimeout(() => {
-          animateShortestPath(nodesInShortestPathOrder);
-        }, 10 * i);
-        return;
-      }
-
-      setTimeout(() => {
-        const node = visitedNodesInOrder[i];
-        const newGrid = grid.slice();
-        const newNode = {
-          ...node,
-          isVisited: true,
-        };
-        newGrid[node.row][node.col] = newNode;
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node visited-node";
-        //setGrid(newGrid);
-      }, 10 * i);
-    }
-  };
-
-  // Animate the Depth First Search Algorithm
-  const animateDFS = (visitedNodesInOrder, startNode, endNode) => {
-    console.log(visitedNodesInOrder);
-    for (let i = 0; i < visitedNodesInOrder.length; i++) {
-      if (visitedNodesInOrder[i - 1] === endNode) {
-        setTimeout(() => {
-          animatePath(visitedNodesInOrder, startNode, endNode);
-        }, 10 * i);
-        return;
-      }
-
-      setTimeout(() => {
-        const node = visitedNodesInOrder[i];
-        const newGrid = grid.slice();
-        const newNode = {
-          ...node,
-          isVisited: true,
-        };
-        newGrid[node.row][node.col] = newNode;
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node visited-node";
-      }, 10 * i);
-    }
-  };
-
-  const getNodesInOrder = (startNode, endNode) => {
-    const nodesInShortestPathOrder = [];
-
-    let currentNode = endNode;
-    while (currentNode !== startNode) {
-      nodesInShortestPathOrder.unshift(currentNode);
-      currentNode = currentNode.previousNode;
-    }
-    return nodesInShortestPathOrder;
-  };
-
-  // Animate the path after the algorithm is complete
-  const animatePath = (visitedNodesInOrder, startNode, endNode) => {
-    const nodesInOrder = getNodesInOrder(startNode, endNode);
-
-    for (let i = 0; i < nodesInOrder.length; i++) {
-      if (nodesInOrder[i - 1] === endNode) return;
-      setTimeout(() => {
-        // Set the node class
-        const node = nodesInOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node shortestPath-node";
-      }, 50 * i);
-    }
-  };
-
-  // Animates the Shortest path for dijkstras
-  const animateShortestPath = (nodesInShortestPathOrder, endNode) => {
-    for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
-      setTimeout(() => {
-        // Set the node class
-        const node = nodesInShortestPathOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node shortestPath-node";
-      }, 50 * i);
-    }
-  };
-
+  // Algorithm Calls
   const dijkstrasAlgorithm = () => {
     const startNode = grid[startRow][startCol];
     const endNode = grid[endRow][endCol];
     const visitedNodesInorder = dijkstra(grid, startNode, endNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
-    animateDijkstras(visitedNodesInorder, nodesInShortestPathOrder);
+    animateDijkstras(grid, visitedNodesInorder, nodesInShortestPathOrder);
   };
 
   const dfsAlgorithm = () => {
@@ -251,7 +149,7 @@ function PathfindingAlgorithms() {
       gridHeight,
       gridWidth
     );
-    animateDFS(visitedNodesInOrder, startNode, endNode);
+    animateDFS(grid, visitedNodesInOrder, startNode, endNode);
   };
 
   const bfsAlgorithm = () => {
@@ -265,14 +163,27 @@ function PathfindingAlgorithms() {
       gridWidth
     );
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
-    animateBFS(visitedNodesInOrder, nodesInShortestPathOrder);
+    animateBFS(grid, visitedNodesInOrder, nodesInShortestPathOrder);
   };
 
   const aStarAlgorithm = () => {
     const startNode = grid[startRow][startCol];
     const endNode = grid[endRow][endCol];
     const path = performAStar(grid, startNode, endNode, gridHeight, gridWidth);
-    animateDijkstras(path[0], path[1]);
+    animateDijkstras(grid, path[0], path[1]);
+  };
+
+  const greedyBfsAlgorithm = () => {
+    const startNode = grid[startRow][startCol];
+    const endNode = grid[endRow][endCol];
+    const path = performGreedyBFS(
+      grid,
+      startNode,
+      endNode,
+      gridHeight,
+      gridWidth
+    );
+    animateDijkstras(grid, path[0], path[1]);
   };
 
   // Should clear all node colors, walls, etc
@@ -310,9 +221,9 @@ function PathfindingAlgorithms() {
       isVisited: false,
       isWall: false,
       previousNode: null,
-      f: 0,
-      g: 0,
-      h: 0,
+      f: null,
+      g: null,
+      h: null,
     };
   };
 
@@ -335,6 +246,7 @@ function PathfindingAlgorithms() {
         callDFS={dfsAlgorithm}
         callBFS={bfsAlgorithm}
         callAStar={aStarAlgorithm}
+        callGreedyBFS={greedyBfsAlgorithm}
         clearGrid={clearGrid}
       />
       <Legend />
