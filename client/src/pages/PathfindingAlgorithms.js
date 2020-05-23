@@ -14,15 +14,10 @@ import { performDFS } from "../components/pathFindingAlgorithms/depthFirstSearch
 import { performBFS } from "../components/pathFindingAlgorithms/breadthFirstSearch";
 import { performAStar } from "../components/pathFindingAlgorithms/aStar";
 
-// Global vars
-let startRow = 10;
-let startCol = 15;
-let endRow = 10;
-let endCol = 29;
-
 function PathfindingAlgorithms() {
   const [grid, setGrid] = useState(null);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
+  const [pressedStartNode, setPressedStartNode] = useState(false);
   const [gridHeight, setGridHeight] = useState(null);
   const [gridWidth, setGridWidth] = useState(null);
 
@@ -53,6 +48,7 @@ function PathfindingAlgorithms() {
 
   const handleMouseDown = (row, col) => {
     if (row === startRow && col === startCol) {
+      setPressedStartNode(true);
       return;
     }
 
@@ -62,18 +58,39 @@ function PathfindingAlgorithms() {
   };
 
   const handleMouseEnter = (row, col) => {
-    if (row === startRow && col === startCol) {
-      setStartRow(row);
-      setStartCol(col);
+    if (pressedStartNode) {
+      const newGrid = getGridWithStartMoved(grid, row, col);
+      setGrid(newGrid);
       return;
-    }
-    if (!mouseIsPressed) return;
+    } else if (!mouseIsPressed) return;
     const newGrid = getGridWithWallToggled(grid, row, col);
     setGrid(newGrid);
   };
 
   const handleMouseUp = () => {
+    //console.log("mouse up");
+    setPressedStartNode(false);
     setMouseIsPressed(false);
+  };
+
+  const getGridWithStartMoved = (grid, row, col) => {
+    // Remove prev start node
+
+    const newGrid = grid.slice();
+    const node = newGrid[row][col];
+
+    if (!node.isWall) {
+      newGrid[startRow][startCol].isStart = false;
+      setStartRow(row);
+      setStartCol(col);
+
+      const newNode = {
+        ...node,
+        isStart: !node.isStart,
+      };
+      newGrid[row][col] = newNode;
+      return newGrid;
+    }
   };
 
   const animateDijkstras = (visitedNodesInorder, nodesInShortestPathOrder) => {
