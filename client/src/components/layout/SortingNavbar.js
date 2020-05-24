@@ -81,6 +81,7 @@ const styles = (theme) => ({
 
 function SortingNavbar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl2, setAnchorEl2] = useState(null);
   const [selectedAlgo, setSelectedAlgo] = useState(null);
   const {
     classes,
@@ -90,7 +91,7 @@ function SortingNavbar(props) {
     callBubblesort,
     callSelectionsort,
     callInsertionsort,
-    clearGrid,
+    setAnimationSpeed,
   } = props;
 
   const handleMenu = (event) => {
@@ -99,6 +100,14 @@ function SortingNavbar(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleMenu2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const handleClose2 = () => {
+    setAnchorEl2(null);
   };
 
   const visualiseAlgorithm = () => {
@@ -111,12 +120,20 @@ function SortingNavbar(props) {
     else if (selectedAlgo === "Insertionsort") callInsertionsort();
   };
 
+  const setSpeed = (speed) => {
+    if (speed === "Fast") setAnimationSpeed(2);
+    else if (speed === "Medium") setAnimationSpeed(15);
+    else setAnimationSpeed(30);
+    handleClose2();
+  };
+
   const setAlgorithm = (algo) => {
     setSelectedAlgo(algo);
     handleClose();
   };
 
   const open = Boolean(anchorEl);
+  const open2 = Boolean(anchorEl2);
 
   return (
     <div className={classes.root}>
@@ -143,6 +160,33 @@ function SortingNavbar(props) {
             >
               Generate New Array
             </Button>
+
+            <Button
+              color="inherit"
+              onClick={handleMenu2}
+              className={classes.buttonFontSize}
+            >
+              Select Speed
+            </Button>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl2}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={open2}
+              onClose={handleClose2}
+            >
+              <MenuItem onClick={() => setSpeed("Fast")}>Fast</MenuItem>
+              <MenuItem onClick={() => setSpeed("Medium")}>Medium</MenuItem>
+              <MenuItem onClick={() => setSpeed("Slow")}>Slow</MenuItem>
+            </Menu>
+
             <Button
               color="inherit"
               onClick={handleMenu}

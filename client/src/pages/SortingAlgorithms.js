@@ -11,7 +11,7 @@ import SortingNavbar from "../components/layout/SortingNavbar";
 
 function SortingAlgorithms() {
   const [barsArray, setBarsArray] = useState(null);
-  const [animationSpeed, setAnimationSpeed] = useState(4);
+  const [animationSpeed, setAnimationSpeed] = useState(2);
 
   useEffect(() => {
     const array = [];
@@ -60,7 +60,7 @@ function SortingAlgorithms() {
             barTwoStyle.backgroundColor = "#e91e63";
           }
         }
-      }, i * (animationSpeed - 2));
+      }, i * (animationSpeed - 1));
     }
   };
 
@@ -160,7 +160,7 @@ function SortingAlgorithms() {
             barTwoStyle.backgroundColor = "#e91e63";
           }
         }
-      }, i * (animationSpeed - 2));
+      }, i * (animationSpeed - 1));
     }
   };
 
@@ -227,6 +227,7 @@ function SortingAlgorithms() {
         callBubblesort={bubbleSortFunc}
         callSelectionsort={selectionSortFunc}
         callInsertionsort={insertionSortFunc}
+        setAnimationSpeed={setAnimationSpeed}
       />
       <div className="array-container">
         {barsArray
