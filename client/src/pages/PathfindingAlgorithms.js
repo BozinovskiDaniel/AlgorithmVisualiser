@@ -40,7 +40,7 @@ function PathfindingAlgorithms() {
     const grid = [];
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const gridHeight = height / 46;
+    const gridHeight = height / 48;
     const gridWidth = width / 32;
     setGridHeight(gridHeight);
     setGridWidth(gridWidth);
@@ -243,6 +243,8 @@ function PathfindingAlgorithms() {
     setGrid(grid);
   };
 
+  const generateMaze = () => {};
+
   const createNode = (col, row) => {
     return {
       col,
@@ -281,6 +283,7 @@ function PathfindingAlgorithms() {
         callGreedyBFS={greedyBfsAlgorithm}
         clearGrid={clearGrid}
         clearPath={clearPath}
+        generateMaze={generateMaze}
       />
       <Legend />
       <div className="grid">

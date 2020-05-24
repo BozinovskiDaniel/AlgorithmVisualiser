@@ -26,7 +26,7 @@ const styles = (theme) => ({
     paddingRight: 90,
   },
   buttonFontSize: {
-    fontSize: "15px",
+    fontSize: "0.8em",
     color: "#eee",
     margin: "0 10px",
   },
@@ -69,7 +69,7 @@ const styles = (theme) => ({
     borderRadius: "25px",
     padding: "0px 25px",
     margin: "0 5px",
-    fontSize: 17,
+    fontSize: "1em",
 
     "&:hover": {
       background: "rgba(233,30,99, 0.9)",
@@ -94,6 +94,7 @@ function Navbar(props) {
     callGreedyBFS,
     clearGrid,
     clearPath,
+    generateMaze,
   } = props;
 
   const handleMenu = (event) => {
@@ -132,7 +133,13 @@ function Navbar(props) {
                 <Typography variant="h5">Path Finding Algorithms</Typography>
               </Button>
             </Grid>
-
+            {/* <Button
+              color="inherit"
+              className={classes.buttonFontSize}
+              onClick={() => generateMaze()}
+            >
+              Generate Maze
+            </Button> */}
             <Button
               color="inherit"
               className={classes.buttonFontSize}
