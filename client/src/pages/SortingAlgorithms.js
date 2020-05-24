@@ -3,10 +3,7 @@ import { getMergeSortAnimations } from "../components/sortingAlgorithms/mergeSor
 import { quickSort } from "../components/sortingAlgorithms/quickSort";
 import { bubbleSort } from "../components/sortingAlgorithms/bubbleSort";
 import { selectionSort } from "../components/sortingAlgorithms/selectionSort";
-import {
-  insertionSort,
-  insertSort,
-} from "../components/sortingAlgorithms/insertionSort";
+import { insertSort } from "../components/sortingAlgorithms/insertionSort";
 import SortingNavbar from "../components/layout/SortingNavbar";
 
 function SortingAlgorithms() {
@@ -243,29 +240,10 @@ function SortingAlgorithms() {
   );
 }
 
-const swap = (arr, a, b) => {
-  let temp = arr[a];
-  arr[a] = arr[b];
-  arr[b] = temp;
-
-  return arr.slice();
-};
-
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function areArraysEqual(a, b) {
-  console.log(a);
-  if (a.length !== b.length) return false;
-  for (let i = 0; i < a.length; i++) {
-    if (a[i] !== b[i]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 export default SortingAlgorithms;

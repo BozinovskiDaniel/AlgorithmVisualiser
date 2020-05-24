@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo from "../../images/logo.png";
-import Slider from "@material-ui/core/Slider";
 
 import {
   Grid,

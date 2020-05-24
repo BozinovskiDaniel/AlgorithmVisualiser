@@ -1,18 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 import logo from "../../images/logo.png";
 
-import {
-  Grid,
-  Button,
-  AppBar,
-  Toolbar,
-  Typography,
-  MenuItem,
-  Menu,
-} from "@material-ui/core";
+import { Grid, Button, AppBar, Toolbar, Typography } from "@material-ui/core";
 
 const styles = (theme) => ({
   row: {
@@ -83,8 +74,6 @@ const styles = (theme) => ({
 });
 
 function GameOfLifeNavbar(props) {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedAlgo, setSelectedAlgo] = useState(null);
   const {
     classes,
     clearGrid,
@@ -93,10 +82,6 @@ function GameOfLifeNavbar(props) {
     runSimulation,
     runningRef,
   } = props;
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <div className={classes.root}>

@@ -11,7 +11,6 @@ import Button from "@material-ui/core/Button";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
-import Icon from "@material-ui/core/Icon";
 
 const styles = (theme) => ({
   root: {
