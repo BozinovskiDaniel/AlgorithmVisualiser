@@ -186,14 +186,18 @@ function PathfindingAlgorithms() {
     animateDijkstras(grid, path[0], path[1]);
   };
 
-  // Should clear all node colors, walls, etc
-  const clearGrid = () => {
-    const grid = [];
+  // Clears only the path, but leaves the walls
+  const clearPath = () => {
+    const newGrid = [];
 
     for (let row = 0; row < gridHeight; row++) {
       const rows = [];
       for (let col = 0; col < gridWidth; col++) {
-        rows.push(createNode(col, row));
+        const node = createNode(col, row);
+
+        if (grid[row][col].isWall) node.isWall = true;
+
+        rows.push(node);
 
         if (row === startRow && col === startCol)
           document.getElementById(`node-${row}-${col}`).className =
@@ -201,10 +205,27 @@ function PathfindingAlgorithms() {
         else if (row === endRow && col === endCol) {
           document.getElementById(`node-${row}-${col}`).className =
             "node end-node";
-        } else {
+        } else if (grid[row][col].isWall)
+          document.getElementById(`node-${row}-${col}`).className =
+            "node node-wall";
+        else {
           // Set grid to just node
           document.getElementById(`node-${row}-${col}`).className = "node";
         }
+      }
+      newGrid.push(rows);
+    }
+    setGrid(newGrid);
+  };
+
+  // Clear all node colors, walls, etc
+  const clearGrid = () => {
+    const grid = [];
+
+    for (let row = 0; row < gridHeight; row++) {
+      const rows = [];
+      for (let col = 0; col < gridWidth; col++) {
+        rows.push(createNode(col, row));
       }
       grid.push(rows);
     }
@@ -248,6 +269,7 @@ function PathfindingAlgorithms() {
         callAStar={aStarAlgorithm}
         callGreedyBFS={greedyBfsAlgorithm}
         clearGrid={clearGrid}
+        clearPath={clearPath}
       />
       <Legend />
       <div className="grid">

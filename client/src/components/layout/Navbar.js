@@ -93,6 +93,7 @@ function Navbar(props) {
     callAStar,
     callGreedyBFS,
     clearGrid,
+    clearPath,
   } = props;
 
   const handleMenu = (event) => {
@@ -131,6 +132,13 @@ function Navbar(props) {
                 <Typography variant="h5">Path Finding Algorithms</Typography>
               </Button>
             </Grid>
+            <Button
+              color="inherit"
+              className={classes.buttonFontSize}
+              onClick={() => clearPath()}
+            >
+              Clear Path
+            </Button>
             <Button
               color="inherit"
               className={classes.buttonFontSize}
