@@ -9,10 +9,10 @@ import {
 } from "../components/sortingAlgorithms/insertionSort";
 import SortingNavbar from "../components/layout/SortingNavbar";
 
-const ANIMATION_SPEED_MS = 4;
-
 function SortingAlgorithms() {
   const [barsArray, setBarsArray] = useState(null);
+  const [animationSpeed, setAnimationSpeed] = useState(4);
+
   useEffect(() => {
     const array = [];
     const width = window.innerWidth;
@@ -60,7 +60,7 @@ function SortingAlgorithms() {
             barTwoStyle.backgroundColor = "#e91e63";
           }
         }
-      }, i * (ANIMATION_SPEED_MS - 2));
+      }, i * (animationSpeed - 2));
     }
   };
 
@@ -77,13 +77,13 @@ function SortingAlgorithms() {
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
-        }, i * ANIMATION_SPEED_MS);
+        }, i * animationSpeed);
       } else {
         setTimeout(() => {
           const [barOneIdx, newHeight] = animations[i];
           const barOneStyle = arrayBars[barOneIdx].style;
           barOneStyle.height = `${newHeight}px`;
-        }, i * ANIMATION_SPEED_MS);
+        }, i * animationSpeed);
       }
     }
   };
@@ -120,7 +120,7 @@ function SortingAlgorithms() {
           barOneStyle.backgroundColor = "#e91e63";
           barTwoStyle.backgroundColor = "#e91e63";
         }
-      }, i * ANIMATION_SPEED_MS);
+      }, i * animationSpeed);
     }
   };
 
@@ -160,7 +160,7 @@ function SortingAlgorithms() {
             barTwoStyle.backgroundColor = "#e91e63";
           }
         }
-      }, i * (ANIMATION_SPEED_MS - 2));
+      }, i * (animationSpeed - 2));
     }
   };
 
@@ -200,7 +200,7 @@ function SortingAlgorithms() {
             barTwoStyle.backgroundColor = "#e91e63";
           }
         }
-      }, i * ANIMATION_SPEED_MS);
+      }, i * animationSpeed);
     }
   };
 
