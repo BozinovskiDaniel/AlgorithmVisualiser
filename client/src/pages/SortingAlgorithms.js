@@ -16,7 +16,7 @@ function SortingAlgorithms() {
   useEffect(() => {
     const array = [];
     const width = window.innerWidth;
-    const size = width / 7.6;
+    const size = width / 13.3;
     for (let i = 0; i < size; i++) {
       array.push(getRandomInt(5, 650));
     }
@@ -207,7 +207,7 @@ function SortingAlgorithms() {
   const resetArray = () => {
     const array = [];
     const width = window.innerWidth;
-    const size = width / 7.6;
+    const size = width / 13.3;
     for (let i = 0; i < size; i++) {
       array.push(getRandomInt(5, 650));
     }
