@@ -69,6 +69,7 @@ const styles = (theme) => ({
     borderRadius: "25px",
     padding: "0px 25px",
     margin: "0 5px",
+    fontSize: 17,
 
     "&:hover": {
       background: "rgba(233,30,99, 0.9)",
@@ -131,19 +132,20 @@ function Navbar(props) {
                 <Typography variant="h5">Path Finding Algorithms</Typography>
               </Button>
             </Grid>
-            <Button
-              color="inherit"
-              className={classes.buttonFontSize}
-              onClick={() => clearPath()}
-            >
-              Clear Path
-            </Button>
+
             <Button
               color="inherit"
               className={classes.buttonFontSize}
               onClick={() => clearGrid()}
             >
               Clear Grid
+            </Button>
+            <Button
+              color="inherit"
+              className={classes.buttonFontSize}
+              onClick={() => clearPath()}
+            >
+              Clear Path
             </Button>
             <Button
               color="inherit"

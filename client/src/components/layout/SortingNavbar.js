@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo from "../../images/logo.png";
+import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
 
 import {
   Grid,
@@ -56,7 +57,7 @@ const styles = (theme) => ({
     borderRadius: "25px",
     padding: "0px 25px",
     margin: "0 5px",
-    fontSize: 12,
+    fontSize: 14,
 
     "&:hover": {
       background: "rgba(233,30,99, 0.9)",
@@ -70,6 +71,7 @@ const styles = (theme) => ({
     borderRadius: "25px",
     padding: "0px 25px",
     margin: "0 5px",
+    fontSize: 17,
 
     "&:hover": {
       background: "rgba(233,30,99, 0.9)",
@@ -149,7 +151,8 @@ function SortingNavbar(props) {
             </Grid>
             <Link to="/" style={{ textDecoration: "none" }}>
               <Button color="inherit" className={classes.switchPageButton}>
-                Go to PathFinding Algorithms
+                <KeyboardReturnIcon style={{ paddingRight: "5px" }} />
+                BACK
               </Button>
             </Link>
             <Button

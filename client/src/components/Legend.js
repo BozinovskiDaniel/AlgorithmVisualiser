@@ -102,7 +102,7 @@ const styles = (theme) => ({
     margin: theme.spacing(1),
     backgroundColor: "#e91e63",
     color: "#fff",
-    fontSize: "0.58em",
+    fontSize: 11,
     fontWeight: "600",
     "&:hover": {
       transform: "scale(1.02)",
@@ -110,8 +110,8 @@ const styles = (theme) => ({
     },
   },
   rightIcon: {
-    height: 30,
-    width: 30,
+    height: 20,
+    width: 20,
   },
 });
 
