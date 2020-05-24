@@ -213,8 +213,7 @@ function SortingAlgorithms() {
     }
 
     const arrayBars = document.getElementsByClassName("array-bar");
-    for (let bar of arrayBars)
-      bar.style.backgroundColor = "rgba(0, 0, 66, 0.75)";
+    for (let bar of arrayBars) bar.style.backgroundColor = "rgb(12, 53, 71)";
     setBarsArray(array);
   };
 

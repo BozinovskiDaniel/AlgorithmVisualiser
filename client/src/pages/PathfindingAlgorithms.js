@@ -226,6 +226,17 @@ function PathfindingAlgorithms() {
       const rows = [];
       for (let col = 0; col < gridWidth; col++) {
         rows.push(createNode(col, row));
+
+        if (row === startRow && col === startCol)
+          document.getElementById(`node-${row}-${col}`).className =
+            "node start-node";
+        else if (row === endRow && col === endCol) {
+          document.getElementById(`node-${row}-${col}`).className =
+            "node end-node";
+        } else {
+          // Set grid to just node
+          document.getElementById(`node-${row}-${col}`).className = "node";
+        }
       }
       grid.push(rows);
     }
