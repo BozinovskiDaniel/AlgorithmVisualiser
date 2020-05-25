@@ -133,13 +133,6 @@ function Navbar(props) {
                 <Typography variant="h5">Path Finding Algorithms</Typography>
               </Button>
             </Grid>
-            {/* <Button
-              color="inherit"
-              className={classes.buttonFontSize}
-              onClick={() => generateMaze()}
-            >
-              Generate Maze
-            </Button> */}
             <Button
               color="inherit"
               className={classes.buttonFontSize}
